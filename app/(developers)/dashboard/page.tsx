@@ -24,7 +24,7 @@ const DashboardPage = () => {
 
                 {/* Add Property CTA */}
                 <Link
-                    href="/developer/upload"
+                    href="/dashboard/upload"
                     className="flex items-center gap-2 bg-[#C9A84C] hover:bg-[#B8962E] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm"
                 >
                     Add Property

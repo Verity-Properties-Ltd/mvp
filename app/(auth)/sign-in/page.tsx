@@ -60,7 +60,7 @@ export default function SignInPage() {
     };
 
     return (
-        <div className="min-h-screen bg-[#0A1929] flex flex-col">
+        <div className="min-h-screen bg-[#062642] flex flex-col">
             {/* Nav */}
             <nav className="flex items-center justify-between px-8 py-5">
                 <VerityLogo />

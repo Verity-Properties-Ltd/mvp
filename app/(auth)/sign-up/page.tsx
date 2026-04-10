@@ -221,7 +221,7 @@ const RegistrationScreen = ({ onComplete }: { onComplete: (email: string) => voi
     ];
 
     return (
-        <div className="min-h-screen bg-[#0A1929] flex flex-col">
+        <div className="min-h-screen bg-[#062642] flex flex-col">
             <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
             <div className="flex-1 flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-[440px]">
@@ -317,7 +317,7 @@ const EmailVerificationScreen = ({
     };
 
     return (
-        <div className="min-h-screen bg-[#0A1929] flex flex-col">
+        <div className="min-h-screen bg-[#062642] flex flex-col">
             <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
             <div className="flex-1 flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-[440px]">
@@ -392,8 +392,8 @@ const OnboardingChecklist = () => {
 
     const tasks = [
         { label: 'Upload your first document', desc: 'Add a company document to begin your verification process.', icon: Upload, done: true, href: '/dashboard/upload' },
-        { label: 'Complete company profile', desc: 'Add your company logo, description, and contact details.', icon: Building2, done: true, href: '/dashboard/settings' },
-        { label: 'Invite a team member', desc: 'Collaborate with your team by inviting colleagues.', icon: Users, done: false, href: '/dashboard/team' },
+        { label: 'Complete company profile', desc: 'Add your company logo, description, and contact details.', icon: Building2, done: true, href: '/dashboard' },
+        { label: 'Invite a team member', desc: 'Collaborate with your team by inviting colleagues.', icon: Users, done: false, href: '/dashboard' },
     ];
 
     const completedCount = tasks.filter((t) => t.done).length;
@@ -402,7 +402,7 @@ const OnboardingChecklist = () => {
     const r = 18; const circ = 2 * Math.PI * r; const dash = (percent / 100) * circ;
 
     return (
-        <div className="min-h-screen bg-[#0A1929] flex flex-col">
+        <div className="min-h-screen bg-[#062642] flex flex-col">
             <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
             <div className="flex-1 flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-[480px]">

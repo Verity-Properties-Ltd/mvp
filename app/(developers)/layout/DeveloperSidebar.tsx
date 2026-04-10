@@ -17,15 +17,15 @@ import { usePathname } from 'next/navigation';
 
 // ─── Nav structure matching the design ───────────────────────────────────────
 const mainMenu = [
-    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-    { name: 'Properties', icon: Building2, path: '/dashboard/properties' },
-    { name: 'reports', icon: FileBarChart2, path: '/dashboard/reports' },
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard', disabled: false },
+    { name: 'Properties', icon: Building2, path: '/dashboard/properties', disabled: false },
+    { name: 'reports', icon: FileBarChart2, path: '/dashboard/reports', disabled: true },
 ];
 
 const accountMenu = [
-    { name: 'Team', icon: Users, path: '/developer/team' },
-    { name: 'Billing', icon: CreditCard, path: '/developer/billing' },
-    { name: 'Settings', icon: Settings, path: '/developer/settings' },
+    { name: 'Team', icon: Users, path: '/developer/team', disabled: true },
+    { name: 'Billing', icon: CreditCard, path: '/developer/billing', disabled: true },
+    { name: 'Settings', icon: Settings, path: '/developer/settings', disabled: true },
 ];
 
 // ─── Verity Shield Logo SVG ───────────────────────────────────────────────────
@@ -68,32 +68,49 @@ interface NavItemProps {
     path: string;
     isActive: boolean;
     isCollapsed: boolean;
+    disabled?: boolean;
 }
 
-const NavItem = ({ name, icon: Icon, path, isActive, isCollapsed }: NavItemProps) => (
-    <Link
-        href={path}
-        title={isCollapsed ? name : undefined}
-        className={`
-      flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 text-sm group relative
-      ${isCollapsed ? 'justify-center' : ''}
-      ${isActive
+const NavItem = ({ name, icon: Icon, path, isActive, isCollapsed, disabled }: NavItemProps) => {
+    const baseClass = `
+        flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 text-sm group relative
+        ${isCollapsed ? 'justify-center' : ''}
+        ${disabled
+            ? 'text-[#D1D5DB] cursor-not-allowed opacity-50'
+            : isActive
                 ? 'bg-[#FDF6E7] text-[#C9A84C]'
                 : 'text-[#6B7280] hover:bg-[#F3F4F6] hover:text-[#374151]'
-            }
-    `}
-    >
-        <Icon
-            className={`shrink-0 transition-colors ${isCollapsed ? 'w-5 h-5' : 'w-[18px] h-[18px]'} 
-        ${isActive ? 'text-[#C9A84C]' : 'text-[#9CA3AF] group-hover:text-[#6B7280]'}`}
-        />
-        {!isCollapsed && (
-            <span className={`font-medium leading-none ${isActive ? 'text-[#C9A84C]' : ''}`}>
-                {name}
+        }
+    `;
+
+    const content = (
+        <>
+            <Icon
+                className={`shrink-0 transition-colors ${isCollapsed ? 'w-5 h-5' : 'w-[18px] h-[18px]'}
+                    ${disabled ? 'text-[#D1D5DB]' : isActive ? 'text-[#C9A84C]' : 'text-[#9CA3AF] group-hover:text-[#6B7280]'}`}
+            />
+            {!isCollapsed && (
+                <span className={`font-medium leading-none ${disabled ? '' : isActive ? 'text-[#C9A84C]' : ''}`}>
+                    {name}
+                </span>
+            )}
+        </>
+    );
+
+    if (disabled) {
+        return (
+            <span title={isCollapsed ? name : undefined} className={baseClass}>
+                {content}
             </span>
-        )}
-    </Link>
-);
+        );
+    }
+
+    return (
+        <Link href={path} title={isCollapsed ? name : undefined} className={baseClass}>
+            {content}
+        </Link>
+    );
+};
 
 // ─── Section label ────────────────────────────────────────────────────────────
 const SectionLabel = ({ label, isCollapsed }: { label: string; isCollapsed: boolean }) => {
@@ -113,14 +130,14 @@ const DeveloperSidebar = () => {
     const pathname = usePathname();
 
     const isActive = (path: string) => pathname === path;
-    
+
     return (
         <aside
             className={`
-        ${isCollapsed ? 'w-[72px]' : 'w-60'}
-        h-screen bg-white border-r border-[#E5E7EB] flex flex-col
-        transition-all duration-300 ease-in-out shrink-0
-      `}
+                ${isCollapsed ? 'w-[72px]' : 'w-60'}
+                h-screen bg-white border-r border-[#E5E7EB] flex flex-col
+                transition-all duration-300 ease-in-out shrink-0
+            `}
         >
             {/* ── Logo ── */}
             <div className="h-14 flex items-center px-4 border-b border-[#F3F4F6] shrink-0">
@@ -143,7 +160,7 @@ const DeveloperSidebar = () => {
                 {/* Main Menu */}
                 <SectionLabel label="Main Menu" isCollapsed={isCollapsed} />
                 <div className="space-y-0.5">
-                    {mainMenu.map(({ name, icon, path }) => (
+                    {mainMenu.map(({ name, icon, path, disabled }) => (
                         <NavItem
                             key={path}
                             name={name}
@@ -151,6 +168,7 @@ const DeveloperSidebar = () => {
                             path={path}
                             isActive={isActive(path)}
                             isCollapsed={isCollapsed}
+                            disabled={disabled}
                         />
                     ))}
                 </div>
@@ -158,7 +176,7 @@ const DeveloperSidebar = () => {
                 {/* Account */}
                 <SectionLabel label="Account" isCollapsed={isCollapsed} />
                 <div className="space-y-0.5">
-                    {accountMenu.map(({ name, icon, path }) => (
+                    {accountMenu.map(({ name, icon, path, disabled }) => (
                         <NavItem
                             key={path}
                             name={name}
@@ -166,6 +184,7 @@ const DeveloperSidebar = () => {
                             path={path}
                             isActive={isActive(path)}
                             isCollapsed={isCollapsed}
+                            disabled={disabled}
                         />
                     ))}
                 </div>
@@ -176,11 +195,11 @@ const DeveloperSidebar = () => {
                 <button
                     onClick={() => setIsCollapsed(!isCollapsed)}
                     className={`
-            flex items-center gap-2 w-full px-3 py-2 rounded-xl
-            text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F3F4F6]
-            transition-colors text-sm font-medium
-            ${isCollapsed ? 'justify-center' : ''}
-          `}
+                        flex items-center gap-2 w-full px-3 py-2 rounded-xl
+                        text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F3F4F6]
+                        transition-colors text-sm font-medium
+                        ${isCollapsed ? 'justify-center' : ''}
+                    `}
                     title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                 >
                     {isCollapsed ? (
@@ -198,10 +217,10 @@ const DeveloperSidebar = () => {
             <div className="px-3 pb-4 shrink-0">
                 <div
                     className={`
-            flex items-center gap-3 px-2 py-2.5 rounded-xl
-            hover:bg-[#F3F4F6] cursor-pointer transition-colors
-            ${isCollapsed ? 'justify-center px-0' : ''}
-          `}
+                        flex items-center gap-3 px-2 py-2.5 rounded-xl
+                        hover:bg-[#F3F4F6] cursor-pointer transition-colors
+                        ${isCollapsed ? 'justify-center px-0' : ''}
+                    `}
                 >
                     {/* Avatar — teal circle with initials, matching the design */}
                     <div className="w-9 h-9 rounded-full bg-[#0D7A5F] flex items-center justify-center shrink-0">
