@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 interface NavbarProps {
@@ -9,13 +10,29 @@ interface NavbarProps {
 const NAV_LINKS = [
     { label: "How it Works", id: "how-it-works" },
     { label: "Pricing", id: "pricing" },
-    { label: "Developer", id: "for-developers" },
+    { label: "Developer", id: "for-developers", path: "/developers" }, // Added path
     { label: "FAQ", id: "faq" },
 ];
 
 export default function Navbar({ onOpenModal }: NavbarProps) {
     const [scrolled, setScrolled] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
+    const router = useRouter()
+
+    const handleNavClick = (link: { id: string; path?: string }) => {
+        setMenuOpen(false);
+
+        if (link.path) {
+            // Navigate to the new page
+            router.push(link.path);
+        } else {
+            // Smooth scroll to section
+            document.getElementById(link.id)?.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    };
 
     useEffect(() => {
         const handleScroll = () => setScrolled(window.scrollY > 10);
@@ -85,8 +102,8 @@ export default function Navbar({ onOpenModal }: NavbarProps) {
                             <button
                                 key={link.id}
                                 type="button"
-                                onClick={() => scrollTo(link.id)}
-                                className="text-sm font-medium transition-colors duration-150 hover:text-white"
+                                onClick={() => handleNavClick(link)} // Pass the object
+                                className="text-sm cursor-pointer font-medium transition-colors duration-150 hover:text-white"
                                 style={{ color: "rgba(255,255,255,0.65)" }}
                             >
                                 {link.label}

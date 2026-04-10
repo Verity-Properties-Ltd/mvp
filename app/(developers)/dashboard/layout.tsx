@@ -1,5 +1,5 @@
-import UserNavbar from "@/components/layout/UserNavbar";
-import UserSidebar from "@/components/layout/UserSidebar";
+import DeveloperSidebar from "../layout/DeveloperSidebar";
+import DeveloperNavbar from "../layout/DeveloperNavbar";
 
 export default function UserLayout({
   children,
