@@ -29,7 +29,7 @@ export default function Footer({ onOpenModal }: FooterProps) {
     };
 
     return (
-        <footer style={{ background: "#0F2340" }} className="w-full">
+        <footer style={{ background: "#062642" }} className="w-full">
             <div className="max-w-[1280px] mx-auto px-6 py-16">
                 {/* 2-col on mobile, 4-col on desktop */}
                 <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">

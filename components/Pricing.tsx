@@ -6,80 +6,60 @@ interface PricingProps {
 
 const tiers = [
     {
-        id: "standard",
-        name: "Standard",
-        turnaround: "72 hours",
-        price: "₦10,000",
-        priceSub: "/ report",
-        tagline: "Individual buyers & first-time investors",
-        features: ["Full title document review", "Lagos Land Registry check", "PDF verification report", "Email delivery"],
+        id: "basic",
+        label: "BASIC",
+        price: "₦15,000",
+        turnaround: "72 hours turnaround",
+        features: [
+            "Full title document review",
+            "Lagos Land Registry check",
+            "PDF verification report",
+            "Email delivery",
+        ],
         cta: "Get Started",
         ctaAction: "modal",
         featured: false,
-        turnaroundColor: "#6B7280",
     },
     {
-        id: "professional",
-        name: "Professional",
-        turnaround: "24 hours",
-        price: "₦25,000",
-        priceSub: "/ report",
-        tagline: "Lawyers, agents & due diligence",
-        features: ["Everything in Standard", "Priority analyst review", "Encumbrance deep-check", "Share with bank/lawyer"],
+        id: "standard",
+        label: "STANDARD",
+        price: "₦35,000",
+        turnaround: "48 hours turnaround",
+        features: [
+            "Everything in Basic",
+            "Priority analyst review",
+            "Encumbrance deep-check",
+            "Ownership history trace",
+            "Share with bank/lawyer",
+        ],
         cta: "Get Started",
         ctaAction: "modal",
         featured: true,
-        turnaroundColor: "#0D7A5F",
     },
     {
-        id: "express",
-        name: "Express",
-        turnaround: "6–12 hours",
-        price: "₦50,000",
-        priceSub: "/ report",
-        tagline: "Urgent transactions & bank queries",
-        features: ["Everything in Professional", "Rush analyst assignment", "Dedicated support line", "WhatsApp notification"],
+        id: "premium",
+        label: "PREMIUM",
+        price: "₦75,000",
+        turnaround: "24 hours turnaround",
+        features: [
+            "Everything in Standard",
+            "Rush analyst assignment",
+            "Field agent verification",
+            "Dedicated support line",
+            "WhatsApp notification",
+            "Legal recommendation note",
+        ],
         cta: "Get Started",
         ctaAction: "modal",
         featured: false,
-        turnaroundColor: "#D97706",
-    },
-    {
-        id: "volume",
-        name: "Volume",
-        turnaround: "As ordered",
-        price: "₦150,000",
-        priceSub: "/ month (10 credits)",
-        tagline: "Law firms & high-frequency users",
-        features: ["10 report credits/month", "Credit rollover (1 month)", "Dedicated account manager", "Priority processing"],
-        cta: "Contact Us",
-        ctaAction: "contact",
-        featured: false,
-        turnaroundColor: "#6B7280",
-    },
-    {
-        id: "developer",
-        name: "Developer Dashboard",
-        turnaround: "SaaS — monthly",
-        price: "₦200,000",
-        priceSub: "/ month",
-        tagline: "Real estate developers — portfolio + SaaS",
-        features: ["Unlimited uploads", "Bulk CSV processing", "Verified badge on listings", "API access"],
-        cta: "Request Demo",
-        ctaAction: "scroll",
-        featured: false,
-        turnaroundColor: "#6B7280",
     },
 ];
 
 export default function Pricing({ onOpenModal }: PricingProps) {
     const handleCta = (tier: typeof tiers[0]) => {
-        if (tier.ctaAction === "modal") {
-            onOpenModal(tier.id);
-        } else if (tier.ctaAction === "contact") {
+        if (tier.ctaAction === "modal") onOpenModal(tier.id);
+        else if (tier.ctaAction === "contact") {
             window.location.href = "mailto:hello@verity.properties";
-        } else if (tier.ctaAction === "scroll") {
-            document.getElementById("for-developers")?.scrollIntoView({ behavior: "smooth", block: "start" });
         }
     };
 
@@ -87,159 +67,179 @@ export default function Pricing({ onOpenModal }: PricingProps) {
         <section
             id="pricing"
             aria-label="Pricing"
-            className="w-full"
+            className="w-full relative overflow-hidden"
             style={{
-                background: "#F9FAFB",
+                background: "#062642",
                 scrollMarginTop: "80px",
-                paddingTop: "80px",
-                paddingBottom: "80px",
+                paddingTop: "96px",
+                paddingBottom: "96px",
             }}
         >
-            <div className="max-w-[1200px] mx-auto px-6">
+            {/* Grid overlay */}
+            <svg
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 h-full w-full opacity-[0.025]"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <defs>
+                    <pattern id="pricing-grid" width="60" height="60" patternUnits="userSpaceOnUse">
+                        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="white" strokeWidth="1" />
+                    </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#pricing-grid)" />
+            </svg>
+
+            <div className="relative z-10 max-w-[1200px] mx-auto px-6">
 
                 {/* Header */}
-                <div className="text-center mb-14">
-                    <span
-                        className="text-[11px] font-semibold tracking-[0.15em] uppercase"
-                        style={{ color: "#0D7A5F" }}
+                <div className="text-center mb-16">
+                    <p
+                        className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full mx-auto"
+                        style={{
+                            background: "rgba(201,168,76,0.12)",
+                            color: "#C9A84C",
+                            border: "1px solid rgba(201,168,76,0.3)",
+                        }}
                     >
                         Pricing
-                    </span>
-                    <div className="h-[2px] w-6 rounded-full mx-auto mt-3" style={{ background: "#C9A84C" }} />
+                    </p>
                     <h2
-                        className="mt-4 font-bold text-[32px] font-serif"
-                        style={{ color: "#1B3F6B" }}
+                        className="font-extrabold text-white mb-4"
+                        style={{
+                            fontSize: "clamp(28px, 4vw, 48px)",
+                            fontFamily: "var(--font-display)",
+                            lineHeight: 1.1,
+                        }}
                     >
-                        Transparent pricing. No hidden fees.
+                        Simple, honest pricing
                     </h2>
+                    <p
+                        className="mx-auto"
+                        style={{
+                            fontSize: "clamp(14px, 1.5vw, 16px)",
+                            color: "rgba(255,255,255,0.5)",
+                            maxWidth: "420px",
+                            lineHeight: 1.6,
+                        }}
+                    >
+                        No hidden fees. No subscriptions. Pay only for the report you need.
+                    </p>
                 </div>
 
-                {/* Cards — horizontal scroll on mobile */}
-                <div className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory md:overflow-visible md:pb-0 md:grid md:grid-cols-3 lg:grid-cols-5">
+                {/* Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch pt-6">
                     {tiers.map((tier) => (
                         <div
                             key={tier.id}
-                            className={`
-                                snap-start flex-shrink-0 w-[80vw] sm:w-[300px] md:w-auto
-                                rounded-2xl p-8 flex flex-col gap-5 relative
-                                transition-all duration-200 group
-                                ${tier.featured
-                                    ? "border-0 shadow-xl"
-                                    : "border border-gray-200 bg-white hover:shadow-lg hover:border-[#C9A84C] cursor-pointer"
-                                }
-                            `}
-                            style={
-                                tier.featured
-                                    ? { background: "#0F2340", marginTop: "-8px", marginBottom: "-8px" }
-                                    : {}
-                            }
+                            className="relative rounded-2xl flex flex-col transition-all duration-200"
+                            style={{
+                                background: tier.featured
+                                    ? "rgba(255,255,255,0.09)"
+                                    : "rgba(255,255,255,0.04)",
+                                border: tier.featured
+                                    ? "1px solid rgba(255,255,255,0.18)"
+                                    : "1px solid rgba(255,255,255,0.09)",
+                            }}
                         >
                             {/* Most Popular badge */}
                             {tier.featured && (
-                                <div
-                                    className="absolute -top-3 right-6 px-3 py-1 rounded-lg text-[11px] font-bold uppercase tracking-wider"
-                                    style={{ background: "#C9A84C", color: "#1F2937" }}
-                                >
-                                    Most Popular
+                                <div className="absolute -top-4 left-0 right-0 flex justify-center">
+                                    <span
+                                        className="text-[11px] font-bold uppercase tracking-widest px-5 py-1.5 rounded-full flex items-center gap-1.5"
+                                        style={{ background: "#C9A84C", color: "#062642" }}
+                                    >
+                                        ✦ Most Popular
+                                    </span>
                                 </div>
                             )}
 
-                            {/* Gold top border on hover for non-featured */}
-                            {!tier.featured && (
-                                <div
-                                    className="absolute top-0 left-0 right-0 h-[3px] rounded-t-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                                    style={{ background: "#C9A84C" }}
-                                />
-                            )}
-
-                            {/* Tier name */}
-                            <div>
-                                <h3
-                                    className="font-semibold text-lg mb-1 font-serif"
-                                    style={{ color: tier.featured ? "white" : "#1B3F6B" }}
+                            <div className="p-8 flex flex-col flex-1">
+                                {/* Label */}
+                                <p
+                                    className="text-xs font-semibold uppercase tracking-[0.15em] mb-3"
+                                    style={{ color: "rgba(255,255,255,0.45)" }}
                                 >
-                                    {tier.name}
-                                </h3>
-                                <span
-                                    className="inline-block text-[11px] font-semibold px-2 py-0.5 rounded-full"
-                                    style={{
-                                        background: tier.featured ? "rgba(255,255,255,0.15)" : "#F3F4F6",
-                                        color: tier.featured ? "rgba(255,255,255,0.8)" : tier.turnaroundColor,
-                                    }}
-                                >
-                                    {tier.turnaround}
-                                </span>
-                            </div>
+                                    {tier.label}
+                                </p>
 
-                            {/* Price */}
-                            <div>
-                                <span
-                                    className="font-bold font-serif"
+                                {/* Price */}
+                                <p
+                                    className="font-extrabold text-white mb-3 leading-none"
                                     style={{
-                                        fontSize: "32px",
-                                        color: tier.featured ? "#C9A84C" : "#1B3F6B",
-                                        lineHeight: 1,
+                                        fontSize: "clamp(36px, 4vw, 52px)",
+                                        fontFamily: "var(--font-display)",
                                     }}
                                 >
                                     {tier.price}
-                                </span>
-                                <span
-                                    className="text-sm ml-1"
-                                    style={{ color: tier.featured ? "rgba(255,255,255,0.5)" : "#6B7280" }}
-                                >
-                                    {tier.priceSub}
-                                </span>
-                                <p
-                                    className="text-xs mt-1"
-                                    style={{ color: tier.featured ? "rgba(255,255,255,0.5)" : "#6B7280" }}
-                                >
-                                    {tier.tagline}
                                 </p>
-                            </div>
 
-                            {/* Features */}
-                            <ul className="flex flex-col gap-2 flex-1">
-                                {tier.features.map((f) => (
-                                    <li key={f} className="flex items-start gap-2 text-sm">
-                                        <svg
-                                            width="16"
-                                            height="16"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            className="flex-shrink-0 mt-0.5"
-                                        >
-                                            <path
-                                                d="M20 6L9 17L4 12"
-                                                stroke={tier.featured ? "#C9A84C" : "#0D7A5F"}
-                                                strokeWidth="2.5"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            />
+                                {/* Turnaround badge */}
+                                <div className="mb-6">
+                                    <span
+                                        className="inline-flex items-center gap-1.5 text-xs font-medium px-3 py-1 rounded-full"
+                                        style={{
+                                            background: "rgba(13,122,95,0.15)",
+                                            color: "#14B88A",
+                                            border: "1px solid rgba(13,122,95,0.25)",
+                                        }}
+                                    >
+                                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <polyline points="12 6 12 12 16 14" />
                                         </svg>
-                                        <span style={{ color: tier.featured ? "rgba(255,255,255,0.8)" : "#374151" }}>
-                                            {f}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
+                                        {tier.turnaround}
+                                    </span>
+                                </div>
 
-                            {/* CTA */}
-                            <button
-                                type="button"
-                                onClick={() => handleCta(tier)}
-                                className="w-full cursor-pointer py-3 rounded-lg font-semibold text-sm text-white transition-all duration-150 active:scale-[0.98] hover:opacity-90"
-                                style={{ background: "#0D7A5F" }}
-                            >
-                                {tier.cta}
-                            </button>
+                                {/* Divider */}
+                                <div
+                                    className="mb-6"
+                                    style={{ height: "1px", background: "rgba(255,255,255,0.08)" }}
+                                />
+
+                                {/* Features */}
+                                <ul className="flex flex-col gap-3 flex-1 mb-8">
+                                    {tier.features.map((f) => (
+                                        <li key={f} className="flex items-center gap-3 text-sm">
+                                            <svg
+                                                width="16" height="16" viewBox="0 0 24 24"
+                                                fill="none" className="flex-shrink-0"
+                                            >
+                                                <circle cx="12" cy="12" r="10" stroke="#0D7A5F" strokeWidth="1.5" />
+                                                <path d="M8 12l3 3 5-5" stroke="#0D7A5F" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+                                            </svg>
+                                            <span style={{ color: "rgba(255,255,255,0.65)" }}>{f}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+
+                                {/* CTA */}
+                                <button
+                                    type="button"
+                                    onClick={() => handleCta(tier)}
+                                    className="w-full py-3.5 rounded-xl font-semibold text-sm transition-all duration-150 active:scale-[0.98] hover:opacity-90"
+                                    style={
+                                        tier.featured
+                                            ? { background: "#C9A84C", color: "#062642" }
+                                            : {
+                                                background: "transparent",
+                                                color: "white",
+                                                border: "1px solid rgba(255,255,255,0.25)",
+                                            }
+                                    }
+                                >
+                                    {tier.cta}
+                                </button>
+                            </div>
                         </div>
                     ))}
                 </div>
 
                 {/* Footnote */}
-                <p className="text-center text-xs mt-8" style={{ color: "#6B7280" }}>
+                <p className="text-center text-xs mt-10" style={{ color: "rgba(255,255,255,0.3)" }}>
                     All prices in Nigerian Naira (₦). Payments via Paystack (NGN) or Flutterwave (GBP/USD/EUR for diaspora). Prices shown exclude VAT where applicable.
                 </p>
+
             </div>
         </section>
     );
