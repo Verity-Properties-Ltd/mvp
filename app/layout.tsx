@@ -1,20 +1,25 @@
 import type { Metadata } from "next";
-import { DM_Sans, Playfair_Display, JetBrains_Mono, Geist } from "next/font/google";
+import { Inter, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const playfairDisplay = Playfair_Display({
+const inter = Inter({
   subsets: ["latin"],
-  weight: ["700", "800"],
-  variable: "--font-display",
+  variable: "--font-sans",
+  display: "swap",
+});
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  style: ["normal", "italic"],
+  variable: "--font-serif",
   display: "swap",
 });
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500"],
   variable: "--font-mono",
   display: "swap",
 });
@@ -44,11 +49,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={cn("font-sans", geist.variable)}>
-      <body
-        className={`${playfairDisplay.variable} ${jetbrainsMono.variable}`}
-        style={{ fontFamily: "var(--font-body)" }}
-      >
+    <html
+      lang="en"
+      className={cn(inter.variable, cormorantGaramond.variable, jetbrainsMono.variable)}
+    >
+      <body style={{ fontFamily: "var(--font-sans)" }}>
         {children}
       </body>
     </html>

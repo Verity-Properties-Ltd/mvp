@@ -8,7 +8,6 @@ import ReportOrderModal from "./ReportOrderModal";
 import HowItWorks from "./HowItWorks";
 import Pricing from "./Pricing";
 import Trust from "./Trust";
-import ForDevelopers from "./ForDevelopers";
 import FAQ from "./FAQ";
 import Problem from "./Problem";
 
@@ -29,9 +28,9 @@ export default function LandingPage() {
 
     return (
         <>
-            <Navbar onOpenModal={() => openModal()} />
+            <Navbar />
             <main>
-                <Hero onOpenModal={() => openModal()} />
+                <Hero />
                 <Problem />
                 <HowItWorks />
                 <Pricing onOpenModal={openModal} />

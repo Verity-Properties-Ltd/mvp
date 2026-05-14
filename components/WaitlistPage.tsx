@@ -1,18 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Footer from "@/components/Footer";
-import ReportOrderModal from "@/components/ReportOrderModal";
-import Navbar from "@/components/Navbar";
-import HowItWorks from "@/components/HowItWorks";
-import Pricing from "@/components/Pricing";
-import FAQ from "@/components/FAQ";
-import DeveloperHero from "./components/DeveloperHero";
-import DeveloperProblem from "./components/DeveloperProblem";
+import Navbar from "./Navbar";
+import Hero from "./Hero";
+import Footer from "./Footer";
+import ReportOrderModal from "./ReportOrderModal";
+import TwoPaths from "./TwoPaths";
+import WhyUs from "./Whyus";
+import WaitlistForm from "./WaitlistForm";
 
 
 
-export default function DeveloperPage() {
+export default function WaitlistPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const [preSelectedTier, setPreSelectedTier] = useState<string | undefined>();
 
@@ -28,13 +27,17 @@ export default function DeveloperPage() {
 
     return (
         <>
-            <Navbar  />
+            <Navbar />
             <main>
-                <DeveloperHero onOpenModal={() => openModal()} />
-                <DeveloperProblem />
+                <Hero />
+                <TwoPaths />
+                <WhyUs />
+                <WaitlistForm />
+                {/* <Problem />
                 <HowItWorks />
                 <Pricing onOpenModal={openModal} />
-                <FAQ />
+                <Trust />
+                <FAQ /> */}
             </main>
             <Footer onOpenModal={() => openModal()} />
             <ReportOrderModal

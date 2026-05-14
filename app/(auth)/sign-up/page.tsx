@@ -421,10 +421,10 @@ const OnboardingChecklist = () => {
                                 <circle cx="24" cy="24" r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="4" />
                                 <circle cx="24" cy="24" r={r} fill="none" stroke="#C9A84C" strokeWidth="4"
                                     strokeDasharray={`${dash} ${circ}`} strokeLinecap="round" />
-                            </svg>
+                            </svg> 
                             <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold text-[#C9A84C]">{percent}%</span>
                         </div>
-                    </div>
+                    </div> 
                     {/* Tasks */}
                     <div className="space-y-2 mb-5">
                         {tasks.map((task, i) => {
