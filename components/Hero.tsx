@@ -224,7 +224,7 @@ export default function Hero() {
 
                     {/* Bottom stats */}
                     <div
-                        className="pt-9 flex gap-9 flex-wrap"
+                        className="pt-9 grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-9"
                         style={{ borderTop: "1px solid rgba(201,169,97,0.18)" }}
                     >
                         <Stat value="₦100B+" label="Lost to fraud annually" delay={600} />

@@ -36,7 +36,7 @@ export default function TwoPaths() {
                     <rect width="100%" height="100%" fill="url(#tp-grid)" />
                 </svg>
 
-                <div className="relative z-10 max-w-[1320px] mx-auto px-4 sm:px-12 md:px-16 lg:px-24 py-28 md:py-36">
+                <div className="relative z-10 max-w-[1320px] mx-auto px-0 sm:px-12 md:px-16 lg:px-24 py-28 md:py-36">
 
                     {/* ── Eyebrow ── */}
                     <div className={`flex items-center gap-4 mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
