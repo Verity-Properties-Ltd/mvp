@@ -145,7 +145,7 @@ export default function Footer({ onOpenModal }: FooterProps) {
                         Made in Lagos 🇳🇬
                     </span>
                     <span className="font-sans text-[12px] text-[#9DA1A8] text-center">
-                        © 2026 Verity Proptech Ltd. · CAC Registered · NDPR Compliant
+                        © 2026 Verity Property Technologies, Ltd. · CAC Registered · NDPR Compliant
                     </span>
                 </div>
             </div>

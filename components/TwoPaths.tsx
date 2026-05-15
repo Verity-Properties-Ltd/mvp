@@ -185,14 +185,6 @@ export default function TwoPaths() {
                         </div>
                     </div>
 
-                    {/* ── Footer note ── */}
-                    <div className={`mt-10 flex items-center gap-4 transition-all duration-700 delay-300 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
-                        <span className="block w-4 h-px bg-[#C9A961]/50 flex-shrink-0" />
-                        <p style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const, color: "#6B6F77" }}>
-                            Both paths lead to the same waitlist — we&apos;ll match you at launch.
-                        </p>
-                    </div>
-
                 </div>
             </section>
 

@@ -18,7 +18,6 @@ const useInView = (threshold = 0.08) => {
     return { ref, visible }
 }
 
-// ── Shared field wrapper ───────────────────────────────────────────────────────
 const Field = ({
     label,
     required,
@@ -58,7 +57,6 @@ const inputClass =
 const selectClass =
     "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 appearance-none focus:outline-none focus:border-[#C9A961] transition-colors duration-150 cursor-pointer"
 
-// ── Chevron icon for selects ───────────────────────────────────────────────────
 const Chevron = () => (
     <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
         <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
@@ -67,7 +65,6 @@ const Chevron = () => (
     </div>
 )
 
-// ── Buyer form ─────────────────────────────────────────────────────────────────
 const BuyerForm = ({ visible }: { visible: boolean }) => {
     const [submitted, setSubmitted] = useState(false)
 
@@ -81,7 +78,6 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                 transition: "opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s",
             }}
         >
-            {/* Header */}
             <div className="mb-10">
                 <div className="flex items-center gap-3 mb-5">
                     <span className="block w-8 h-px bg-[#C9A961] flex-shrink-0" />
@@ -93,7 +89,7 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                     className="font-serif font-normal text-[#F5F2ED] mb-5"
                     style={{ fontSize: "clamp(28px, 3.5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
                 >
-                    Be first in line when we open <br></br> verification{" "}
+                    Be first in line when we open <br />verification{" "}
                     <em className="italic text-[#C9A961]">to the public.</em>
                 </h2>
                 <p className="font-sans text-[15px] leading-[1.75] text-[rgba(245,242,237,0.65)] font-normal max-w-[52ch]">
@@ -103,18 +99,27 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                 </p>
             </div>
 
-            {/* Form */}
             <form
                 onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}
                 className="flex flex-col gap-8"
             >
                 <div className="grid grid-cols-2 gap-x-6 gap-y-7">
-                    <Field label="Your name" required>
+                    <Field label="First name" required>
                         <input
                             type="text"
                             required
-                            placeholder="Folake Adeyemi"
-                            autoComplete="name"
+                            placeholder="Amina"
+                            autoComplete="given-name"
+                            className={inputClass}
+                        />
+                    </Field>
+
+                    <Field label="Last name" required>
+                        <input
+                            type="text"
+                            required
+                            placeholder="Musa"
+                            autoComplete="family-name"
                             className={inputClass}
                         />
                     </Field>
@@ -123,7 +128,7 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                         <input
                             type="email"
                             required
-                            placeholder="folake@example.com"
+                            placeholder="amina@example.com"
                             autoComplete="email"
                             className={inputClass}
                         />
@@ -148,7 +153,7 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                         </div>
                     </Field>
 
-                    <Field label="Timing">
+                    <Field label="Timing" full>
                         <div className="relative">
                             <select className={selectClass} defaultValue="">
                                 <option value="" disabled>When are you buying?</option>
@@ -162,7 +167,6 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                     </Field>
                 </div>
 
-                {/* Submit */}
                 <div className="flex flex-col gap-4 pt-2">
                     <button
                         type="submit"
@@ -180,7 +184,6 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
     )
 }
 
-// ── Developer form ─────────────────────────────────────────────────────────────
 const DeveloperForm = ({ visible }: { visible: boolean }) => {
     const [submitted, setSubmitted] = useState(false)
 
@@ -194,7 +197,6 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                 transition: "opacity 0.5s ease 0.1s, transform 0.5s ease 0.1s",
             }}
         >
-            {/* Header */}
             <div className="mb-10">
                 <div className="flex items-center gap-3 mb-5">
                     <span className="block w-8 h-px bg-[#C9A961] flex-shrink-0" />
@@ -216,18 +218,27 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                 </p>
             </div>
 
-            {/* Form */}
             <form
                 onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}
                 className="flex flex-col gap-8"
             >
                 <div className="grid grid-cols-2 gap-x-6 gap-y-7">
-                    <Field label="Your name" required>
+                    <Field label="First name" required>
                         <input
                             type="text"
                             required
-                            placeholder="Oladipo Awolaja"
-                            autoComplete="name"
+                            placeholder="Grace"
+                            autoComplete="given-name"
+                            className={inputClass}
+                        />
+                    </Field>
+
+                    <Field label="Last name" required>
+                        <input
+                            type="text"
+                            required
+                            placeholder="Afolabi"
+                            autoComplete="family-name"
                             className={inputClass}
                         />
                     </Field>
@@ -236,7 +247,7 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                         <input
                             type="email"
                             required
-                            placeholder="you@company.com"
+                            placeholder="graceafolabi@company.com"
                             autoComplete="email"
                             className={inputClass}
                         />
@@ -297,7 +308,6 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                     </Field>
                 </div>
 
-                {/* Submit */}
                 <div className="flex flex-col gap-4 pt-2">
                     <button
                         type="submit"
@@ -315,7 +325,6 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
     )
 }
 
-// ── Confirmation state ─────────────────────────────────────────────────────────
 const Confirmation = () => (
     <div className="flex flex-col items-start gap-6 py-8">
         <div className="w-14 h-14 rounded-full bg-[#C9A961] flex items-center justify-center flex-shrink-0">
@@ -337,7 +346,6 @@ const Confirmation = () => (
     </div>
 )
 
-// ── Main export ────────────────────────────────────────────────────────────────
 type Tab = "buyer" | "developer"
 
 export default function WaitlistForm() {
@@ -356,7 +364,6 @@ export default function WaitlistForm() {
                     className="mx-auto px-4 sm:px-12 pt-20 pb-28"
                     style={{ maxWidth: 1280 }}
                 >
-                    {/* ── Top eyebrow ── */}
                     <div
                         className="flex items-center gap-3 mb-14"
                         style={{
@@ -371,7 +378,6 @@ export default function WaitlistForm() {
                         </span>
                     </div>
 
-                    {/* ── Tab toggle ── */}
                     <div
                         className="grid grid-cols-2 mb-16"
                         style={{
@@ -401,7 +407,6 @@ export default function WaitlistForm() {
                         ))}
                     </div>
 
-                    {/* ── Form panels ── */}
                     <div style={{ maxWidth: 880 }}>
                         <div
                             id="panel-buyer"
