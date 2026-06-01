@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Cormorant_Garamond, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Providers from "./Providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -54,7 +55,9 @@ export default function RootLayout({
       className={cn(inter.variable, cormorantGaramond.variable, jetbrainsMono.variable)}
     >
       <body style={{ fontFamily: "var(--font-sans)" }}>
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );

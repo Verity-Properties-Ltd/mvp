@@ -1,6 +1,15 @@
 "use client"
 
 import { useState, useRef, useEffect } from "react"
+import type {
+    WaitlistPayload,
+    WaitlistCountry,
+    WaitlistTiming,
+    FoundingPartnerPayload,
+    PortfolioSize,
+    FoundingPartnerRole,
+} from "@/types/waitlist"
+import { useFoundingPartnerApply, useWaitlistSignup } from "@/hooks/useWaitlist"
 
 const useInView = (threshold = 0.08) => {
     const ref = useRef<HTMLDivElement>(null)
@@ -17,6 +26,44 @@ const useInView = (threshold = 0.08) => {
     }, [threshold])
     return { ref, visible }
 }
+
+// ─── Select option maps (display label → API enum value) ──────────────────────
+
+const COUNTRY_OPTIONS: { value: WaitlistCountry; label: string }[] = [
+    { value: "uk", label: "United Kingdom" },
+    { value: "us", label: "United States" },
+    { value: "canada", label: "Canada" },
+    { value: "nigeria", label: "Nigeria" },
+    { value: "uae", label: "United Arab Emirates" },
+    { value: "germany", label: "Germany" },
+    { value: "ireland", label: "Ireland" },
+    { value: "australia", label: "Australia" },
+    { value: "south_africa", label: "South Africa" },
+    { value: "other", label: "Other" },
+]
+
+const TIMING_OPTIONS: { value: WaitlistTiming; label: string }[] = [
+    { value: "active_negotiation", label: "I'm in active negotiation now" },
+    { value: "within_3_months", label: "Within 3 months" },
+    { value: "within_6_months", label: "Within 6 months" },
+    { value: "just_researching", label: "Just researching for now" },
+]
+
+const PORTFOLIO_OPTIONS: { value: PortfolioSize; label: string }[] = [
+    { value: "1_10", label: "1 – 10 properties" },
+    { value: "11_50", label: "11 – 50 properties" },
+    { value: "51_200", label: "51 – 200 properties" },
+    { value: "200_plus", label: "200+ properties" },
+]
+
+const ROLE_OPTIONS: { value: FoundingPartnerRole; label: string }[] = [
+    { value: "founder", label: "Founder" },
+    { value: "ceo", label: "CEO" },
+    { value: "managing_director", label: "Managing Director" },
+    { value: "head_of_sales", label: "Head of Sales" },
+    { value: "operations", label: "Operations" },
+    { value: "other", label: "Other" },
+]
 
 const Field = ({
     label,
@@ -65,10 +112,34 @@ const Chevron = () => (
     </div>
 )
 
-const BuyerForm = ({ visible }: { visible: boolean }) => {
-    const [submitted, setSubmitted] = useState(false)
+const ErrorNote = ({ message }: { message: string }) => (
+    <p className="font-sans text-[13px] leading-[1.6] text-[#E8A5A5]" role="alert">
+        — {message}
+    </p>
+)
 
-    if (submitted) return <Confirmation />
+const BuyerForm = ({ visible }: { visible: boolean }) => {
+    const { mutate, isPending, isError, error, isSuccess } = useWaitlistSignup()
+
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [country, setCountry] = useState("")
+    const [timing, setTiming] = useState("")
+
+    if (isSuccess) return <Confirmation />
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        const payload: WaitlistPayload = {
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+            email: email.trim(),
+            country: (country || null) as WaitlistCountry | null,
+            timing: (timing || null) as WaitlistTiming | null,
+        }
+        mutate(payload)
+    }
 
     return (
         <div
@@ -99,15 +170,14 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                 </p>
             </div>
 
-            <form
-                onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}
-                className="flex flex-col gap-8"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                 <div className="grid grid-cols-2 gap-x-6 gap-y-7">
                     <Field label="First name" required>
                         <input
                             type="text"
                             required
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                             placeholder="Amina"
                             autoComplete="given-name"
                             className={inputClass}
@@ -118,6 +188,8 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                         <input
                             type="text"
                             required
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                             placeholder="Musa"
                             autoComplete="family-name"
                             className={inputClass}
@@ -128,6 +200,8 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                         <input
                             type="email"
                             required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             placeholder="amina@example.com"
                             autoComplete="email"
                             className={inputClass}
@@ -136,18 +210,15 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
 
                     <Field label="Where you're based">
                         <div className="relative">
-                            <select className={selectClass} defaultValue="">
+                            <select
+                                className={selectClass}
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
+                            >
                                 <option value="" disabled>Select country</option>
-                                <option>United Kingdom</option>
-                                <option>United States</option>
-                                <option>Canada</option>
-                                <option>Nigeria</option>
-                                <option>United Arab Emirates</option>
-                                <option>Germany</option>
-                                <option>Ireland</option>
-                                <option>Australia</option>
-                                <option>South Africa</option>
-                                <option>Other</option>
+                                {COUNTRY_OPTIONS.map((o) => (
+                                    <option key={o.value} value={o.value}>{o.label}</option>
+                                ))}
                             </select>
                             <Chevron />
                         </div>
@@ -155,12 +226,15 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
 
                     <Field label="Timing" full>
                         <div className="relative">
-                            <select className={selectClass} defaultValue="">
+                            <select
+                                className={selectClass}
+                                value={timing}
+                                onChange={(e) => setTiming(e.target.value)}
+                            >
                                 <option value="" disabled>When are you buying?</option>
-                                <option>I'm in active negotiation now</option>
-                                <option>Within 3 months</option>
-                                <option>Within 6 months</option>
-                                <option>Just researching for now</option>
+                                {TIMING_OPTIONS.map((o) => (
+                                    <option key={o.value} value={o.value}>{o.label}</option>
+                                ))}
                             </select>
                             <Chevron />
                         </div>
@@ -170,11 +244,14 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                 <div className="flex flex-col gap-4 pt-2">
                     <button
                         type="submit"
-                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#C9A961] border-b border-[#C9A961] pb-1 bg-transparent cursor-pointer transition-colors duration-150"
+                        disabled={isPending}
+                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#C9A961] border-b border-[#C9A961] pb-1 bg-transparent transition-colors duration-150"
+                        style={{ opacity: isPending ? 0.5 : 1, cursor: isPending ? "not-allowed" : "pointer" }}
                     >
-                        Join the buyer waitlist
-                        <span aria-hidden="true" className="wl-arrow">→</span>
+                        {isPending ? "Joining…" : "Join the buyer waitlist"}
+                        {!isPending && <span aria-hidden="true" className="wl-arrow">→</span>}
                     </button>
+                    {isError && <ErrorNote message={(error as Error)?.message ?? "Something went wrong."} />}
                     <p className="font-sans italic text-[13px] text-[rgba(245,242,237,0.38)] leading-[1.6]">
                         — We'll email you at launch, nothing else. No marketing, no third-party sharing. Unsubscribe anytime.
                     </p>
@@ -185,9 +262,33 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
 }
 
 const DeveloperForm = ({ visible }: { visible: boolean }) => {
-    const [submitted, setSubmitted] = useState(false)
+    const { mutate, isPending, isError, error, isSuccess } = useFoundingPartnerApply()
 
-    if (submitted) return <Confirmation />
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [workEmail, setWorkEmail] = useState("")
+    const [company, setCompany] = useState("")
+    const [portfolioSize, setPortfolioSize] = useState("")
+    const [role, setRole] = useState("")
+    const [website, setWebsite] = useState("")
+    const [about, setAbout] = useState("")
+
+    if (isSuccess) return <Confirmation />
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault()
+        const payload: FoundingPartnerPayload = {
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+            work_email: workEmail.trim(),
+            company_name: company.trim(),
+            portfolio_size: portfolioSize as PortfolioSize,
+            role: role as FoundingPartnerRole,
+            website: website.trim() || null,
+            about: about.trim(),
+        }
+        mutate(payload)
+    }
 
     return (
         <div
@@ -218,15 +319,14 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                 </p>
             </div>
 
-            <form
-                onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}
-                className="flex flex-col gap-8"
-            >
+            <form onSubmit={handleSubmit} className="flex flex-col gap-8">
                 <div className="grid grid-cols-2 gap-x-6 gap-y-7">
                     <Field label="First name" required>
                         <input
                             type="text"
                             required
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
                             placeholder="Grace"
                             autoComplete="given-name"
                             className={inputClass}
@@ -237,6 +337,8 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                         <input
                             type="text"
                             required
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
                             placeholder="Afolabi"
                             autoComplete="family-name"
                             className={inputClass}
@@ -247,44 +349,55 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                         <input
                             type="email"
                             required
+                            value={workEmail}
+                            onChange={(e) => setWorkEmail(e.target.value)}
                             placeholder="graceafolabi@company.com"
                             autoComplete="email"
                             className={inputClass}
                         />
                     </Field>
 
-                    <Field label="Company">
+                    <Field label="Company" required>
                         <input
                             type="text"
+                            required
+                            value={company}
+                            onChange={(e) => setCompany(e.target.value)}
                             placeholder="Registered company name"
                             autoComplete="organization"
                             className={inputClass}
                         />
                     </Field>
 
-                    <Field label="Portfolio size">
+                    <Field label="Portfolio size" required>
                         <div className="relative">
-                            <select className={selectClass} defaultValue="">
+                            <select
+                                className={selectClass}
+                                required
+                                value={portfolioSize}
+                                onChange={(e) => setPortfolioSize(e.target.value)}
+                            >
                                 <option value="" disabled>Active properties</option>
-                                <option>1 – 10 properties</option>
-                                <option>11 – 50 properties</option>
-                                <option>51 – 200 properties</option>
-                                <option>200+ properties</option>
+                                {PORTFOLIO_OPTIONS.map((o) => (
+                                    <option key={o.value} value={o.value}>{o.label}</option>
+                                ))}
                             </select>
                             <Chevron />
                         </div>
                     </Field>
 
-                    <Field label="Your role">
+                    <Field label="Your role" required>
                         <div className="relative">
-                            <select className={selectClass} defaultValue="">
+                            <select
+                                className={selectClass}
+                                required
+                                value={role}
+                                onChange={(e) => setRole(e.target.value)}
+                            >
                                 <option value="" disabled>Select role</option>
-                                <option>Founder</option>
-                                <option>CEO</option>
-                                <option>Managing Director</option>
-                                <option>Head of Sales</option>
-                                <option>Operations</option>
-                                <option>Other</option>
+                                {ROLE_OPTIONS.map((o) => (
+                                    <option key={o.value} value={o.value}>{o.label}</option>
+                                ))}
                             </select>
                             <Chevron />
                         </div>
@@ -293,15 +406,20 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                     <Field label="Website" optional>
                         <input
                             type="text"
+                            value={website}
+                            onChange={(e) => setWebsite(e.target.value)}
                             placeholder="company.com"
                             autoComplete="url"
                             className={inputClass}
                         />
                     </Field>
 
-                    <Field label="What you're building" optional full>
+                    <Field label="What you're building" required full>
                         <textarea
                             rows={4}
+                            required
+                            value={about}
+                            onChange={(e) => setAbout(e.target.value)}
                             placeholder="A few lines on your active portfolio, geographies, and what brought you here…"
                             className={`${inputClass} resize-none placeholder:not-italic`}
                         />
@@ -311,11 +429,14 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                 <div className="flex flex-col gap-4 pt-2">
                     <button
                         type="submit"
-                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#C9A961] border-b border-[#C9A961] pb-1 bg-transparent cursor-pointer transition-colors duration-150"
+                        disabled={isPending}
+                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#C9A961] border-b border-[#C9A961] pb-1 bg-transparent transition-colors duration-150"
+                        style={{ opacity: isPending ? 0.5 : 1, cursor: isPending ? "not-allowed" : "pointer" }}
                     >
-                        Submit application
-                        <span aria-hidden="true" className="wl-arrow">→</span>
+                        {isPending ? "Submitting…" : "Submit application"}
+                        {!isPending && <span aria-hidden="true" className="wl-arrow">→</span>}
                     </button>
+                    {isError && <ErrorNote message={(error as Error)?.message ?? "Something went wrong."} />}
                     <p className="font-sans italic text-[13px] text-[rgba(245,242,237,0.38)] leading-[1.6]">
                         — Reviewed within 5 business days. Successful applicants get a 20-minute onboarding call with the CEO. Limited to first 50.
                     </p>
