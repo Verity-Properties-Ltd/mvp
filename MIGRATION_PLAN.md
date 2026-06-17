@@ -16,7 +16,7 @@ The goal is to land the full surface of verity-frontend inside mvp without bring
 1. **URL strategy** — path-based on a single host. Marketing at `/`. Authenticated surfaces under `/app/*` (e.g. `/app/buyer`, `/app/developer/portfolio`, `/app/internal/specialist`). Public certificates at `/v/{VPID}`. **Requires** a dated Change Notice to PRD §2.1 / UI/UX §2.1 to record the divergence from the three-subdomain spec.
 2. **Styling** — keep Tailwind v4 + shadcn primitives, but wire `packages/brand` CSS variables into `globals.css` and re-export them as Tailwind v4 `@theme` tokens. shadcn primitives are restyled to brand. All hardcoded hex in mvp (`#C9A84C`, `#062642`, etc.) is replaced with tokens.
 3. **Next version** — stay on Next 16.x (mvp's current 16.2.2). React 19.2.4.
-4. **Phasing** — four PRs: Foundation → Buyer → Developer → Internal.
+4. **Phasing** — four PRs: Foundation → Developer → Buyer → Internal. Order revised per @Divineverity review (mvp#1): finish the existing developer dashboard surface before opening the buyer flow.
 5. **Marketing** — keep mvp's marketing content (Hero, TwoPaths, Whyus, HowItWorks, Pricing, FAQ, Trust, ForDevelopers, WaitlistForm). Restyle to brand tokens. Discard `verity-frontend/apps/landing` entirely.
 6. **Auth + developer dashboard** — keep mvp's visual shells, rewire internals to call verity-frontend's mock services. Single `/sign-in` and `/sign-up` pages are preserved (NOT split into buyer/developer); on successful auth the response from `authService.signIn` dictates the redirect (`/app/buyer` vs `/app/developer`). The split-by-role auth structure from verity-frontend is **not** carried over — this is an intentional simplification documented in the Change Notice.
 
@@ -73,31 +73,63 @@ Goal: tokens, marketing restyle, scaffolding ready for surfaces to land.
 3. **Auth shell rewire**
    - Keep `app/(auth)/sign-in/page.tsx` and `app/(auth)/sign-up/page.tsx` as single pages.
    - Replace stub `handleSubmit` with calls to `authService.signIn` / `authService.signUp` (mock impl from verity-frontend, dropped into `mvp/lib/services/auth/`).
+   - The unified mock is ported from `verity-frontend/apps/app/src/dev/lib/services/mocks/authService.mock.ts` (developer-side includes `EmailExistsError`). Buyer-side variant is folded in during Phase 3 if any divergence is found.
    - On signin success, read `session.role` and `router.push('/app/buyer')` or `'/app/developer')`. On `internal`, push `/app/internal/{subRole}`.
    - Sign-up has role-picker step added (radio: Buyer vs Developer) before the existing 3-step flow.
    - Add `<SessionProvider>` reading from `localStorage['verity:session']` at `app/layout.tsx`.
    - Add `<AuthGuard>` component at `mvp/components/auth/AuthGuard.tsx` (ported from verity-frontend `SignedInGuard`).
 
 4. **Path migration**
-   - Move `app/(developers)/dashboard/*` → `app/app/developer/*` (keep stubs as placeholders; Phase 3 fills them).
+   - Move `app/(developers)/dashboard/*` → `app/app/developer/*` (keep stubs as placeholders; Phase 2 fills them).
    - Restructure existing `app/(developers)/layout` → `app/app/developer/layout.tsx`.
-   - Create empty `app/app/buyer/layout.tsx`, `app/app/internal/layout.tsx`.
+   - Create `app/app/buyer/layout.tsx` + `app/app/buyer/page.tsx` (stub: "Buyer surface — ships in Phase 3").
+   - Create `app/app/internal/layout.tsx` + `app/app/internal/{specialist,ops,admin,registry}/page.tsx` (stubs: "Internal surface — ships in Phase 4"). These are throwaway placeholders that Phase 4 replaces.
    - Marketing routes stay where they are.
 
 5. **PRD Change Notice**
    - Add a `docs/change-notices/2026-06-11-url-and-auth-consolidation.md` recording: (a) move from three subdomains to single-host path-based, (b) collapse split-by-role auth into a single signin/signup page. Notion PRD §2.1 / UI/UX §2.5 update required by lifeofladi.
 
-Acceptance for PR 1: `npm run dev` loads marketing, tokens visible in computed styles, signin redirects to the correct surface, no broken imports.
+Acceptance for PR 1: `npm run dev` loads marketing, tokens visible in computed styles, signin redirects to the correct surface (developer → real shell, buyer/internal → stub placeholders), no broken imports.
 
-## Phase 2 — Buyer surface + public-page (PR 2)
+## Phase 2 — Developer surface (PR 2)
+
+Goal: full developer journey ported under `/app/developer/*`, mvp dashboard shell rewired. Phase 2 also brings in cross-cutting shared libs (auth types, RESO, fixtures) that Phase 3 reuses.
+
+1. **Lib drops** (Phase 2 brings in shared libs first; Phase 3 adds buyer-specific layer on top)
+   - Shared / cross-cutting:
+     - `apps/app/src/lib/types/{auth,verification,certificate}.ts` → `mvp/lib/types/` (Session shape, BandTier, Certificate type — needed by developer property-detail rendering).
+     - `packages/reso/src/{index,ng-lgas,address}.ts` → `mvp/lib/reso/` (used by developer add-property wizard).
+     - `packages/fixtures/src/*` → `mvp/lib/fixtures/` (VERIFICATION_SEEDS consumed by `propertyService.mock`).
+   - Developer-specific:
+     - `apps/app/src/dev/lib/types/{property,kyc,add,account,distribution}.ts` → `mvp/lib/types/developer/`.
+     - `apps/app/src/dev/lib/services/index.ts` + `mocks/{kycService,propertyService,distributionService,accountService}.mock.ts` → `mvp/lib/services/developer/`. (`authService.mock` already ported in Phase 1.)
+
+2. **Dashboard rewire** (existing mvp `app/app/developer/page.tsx`)
+   - Keep the layout structure (StatsCard, RecentProperties, side panels).
+   - Replace mock numbers with `propertyService.getDashboard()` shape: KpiSnapshot, BandTotals, AttentionItems, ActivityEvents.
+   - Add `<QuickActions>` from `mvp/components/developer/QuickActions.tsx`.
+
+3. **Developer routes** (under `app/app/developer/`)
+   - `/portfolio`, `/portfolio/[vpid]`, `/portfolio/add/{type,csv,documents,review}`
+   - `/distribute`, `/kyc/prove`, `/account`
+
+4. **Developer components** → `mvp/components/developer/`
+   - All wizard, property-detail, distribute, KYC, and account components from `apps/app/src/dev/components/`.
+   - Where a buyer counterpart will exist (AddressSection, CategorySelector, etc.), keep developer copies here; Phase 3 lands buyer counterparts and extraction to `mvp/components/shared/wizard/` is deferred to a follow-up cleanup PR to avoid scope creep.
+
+5. **AuthGuard**
+   - Developer routes wrap in `<AuthGuard role="developer">`.
+   - KYC gate: `<KycGate>` redirects unverified developers to `/app/developer/kyc/prove`.
+
+Acceptance for PR 2: end-to-end developer flow works against mocks. Sign up → KYC prove → portfolio add (single + CSV) → portfolio table → property detail → distribute share link.
+
+## Phase 3 — Buyer surface + public-page (PR 3)
 
 Goal: full buyer journey ported under `/app/buyer/*` and `/v/{VPID}` working.
 
-1. **Lib drops**
-   - Copy `verity-frontend/apps/app/src/lib/types/{auth,request,certificate,verification}.ts` → `mvp/lib/types/`.
-   - Copy `verity-frontend/apps/app/src/lib/services/index.ts` + `mocks/{authService,requestService}.mock.ts` → `mvp/lib/services/buyer/`.
-   - Copy `verity-frontend/packages/fixtures/src/*` → `mvp/lib/fixtures/`.
-   - Copy `verity-frontend/packages/reso/src/{index,ng-lgas,address}.ts` → `mvp/lib/reso/`.
+1. **Lib drops** (auth, verification, certificate, reso, fixtures already in place from Phase 2)
+   - `apps/app/src/lib/types/request.ts` → `mvp/lib/types/`.
+   - `apps/app/src/lib/services/index.ts` + `mocks/requestService.mock.ts` → `mvp/lib/services/buyer/`. Re-uses the unified `authService` ported in Phase 1; verifies no buyer/developer divergence in shape.
 
 2. **Buyer routes** (all under `app/app/buyer/`)
    - `/` (dashboard CTA), `/account`, `/history`
@@ -122,38 +154,11 @@ Goal: full buyer journey ported under `/app/buyer/*` and `/v/{VPID}` working.
 6. **AuthGuard**
    - Buyer routes wrap in `<AuthGuard role="buyer">`. Redirect to `/sign-in` if missing session.
 
-Acceptance for PR 2: end-to-end buyer flow works against mock services. Sign in → request wizard → submit → see request in dashboard → open certificate → copy `/v/{VPID}` link → public page renders.
-
-## Phase 3 — Developer surface (PR 3)
-
-Goal: full developer journey ported under `/app/developer/*`, mvp dashboard shell rewired.
-
-1. **Lib drops**
-   - Copy `apps/app/src/dev/lib/types/{property,kyc,add,account,distribution}.ts` → `mvp/lib/types/developer/`.
-   - Copy `apps/app/src/dev/lib/services/index.ts` + `mocks/{authService,kycService,propertyService,distributionService,accountService}.mock.ts` → `mvp/lib/services/developer/`.
-
-2. **Dashboard rewire** (existing mvp `app/app/developer/page.tsx`)
-   - Keep the layout structure (StatsCard, RecentProperties, side panels).
-   - Replace mock numbers with `propertyService.getDashboard()` shape: KpiSnapshot, BandTotals, AttentionItems, ActivityEvents.
-   - Add `<QuickActions>` from `mvp/components/developer/QuickActions.tsx`.
-
-3. **Developer routes** (under `app/app/developer/`)
-   - `/portfolio`, `/portfolio/[vpid]`, `/portfolio/add/{type,csv,documents,review}`
-   - `/distribute`, `/kyc/prove`, `/account`
-
-4. **Developer components** → `mvp/components/developer/`
-   - All wizard, property-detail, distribute, KYC, and account components from `apps/app/src/dev/components/`.
-   - Where a buyer counterpart exists (AddressSection, CategorySelector, etc.), keep two copies for now — extraction to `mvp/components/shared/wizard/` is deferred to a follow-up cleanup PR to avoid scope creep.
-
-5. **AuthGuard**
-   - Developer routes wrap in `<AuthGuard role="developer">`.
-   - KYC gate: `<KycGate>` redirects unverified developers to `/app/developer/kyc/prove`.
-
-Acceptance for PR 3: end-to-end developer flow works against mocks. Sign up → KYC prove → portfolio add (single + CSV) → portfolio table → property detail → distribute share link.
+Acceptance for PR 3: end-to-end buyer flow works against mock services. Sign in → request wizard → submit → see request in dashboard → open certificate → copy `/v/{VPID}` link → public page renders.
 
 ## Phase 4 — Internal scaffolds (PR 4)
 
-Goal: internal/* scaffolds available behind the right subRole guards.
+Goal: internal/* scaffolds available behind the right subRole guards. Covers all four internal subRoles — `specialist`, `ops`, `admin`, `registry` — not admin alone. (@Divineverity's review used "admin" as shorthand for this whole phase.)
 
 1. Copy `apps/app/src/app/internal/{specialist,ops,admin,registry}/*` → `mvp/app/app/internal/`.
 2. Copy `InProgressShell` component and `InternalRail` chrome.
@@ -212,8 +217,8 @@ npm run lint
 End-to-end checks per phase (manual, in browser):
 
 - **Phase 1**: marketing renders with brand fonts/colors; computed styles show `var(--verity-*)` tokens; signin/signup pages reskinned and redirect correctly using mock authService.
-- **Phase 2**: buyer flow round-trips: sign in → `/app/buyer` → `/app/buyer/request/new/*` wizard → confirm → certificate → `/v/{VPID}` resolves on a fresh browser session.
-- **Phase 3**: developer flow round-trips: sign up → KYC stub → portfolio add (single + CSV) → property detail → distribute link.
+- **Phase 2**: developer flow round-trips: sign up → KYC stub → portfolio add (single + CSV) → property detail → distribute link.
+- **Phase 3**: buyer flow round-trips: sign in → `/app/buyer` → `/app/buyer/request/new/*` wizard → confirm → certificate → `/v/{VPID}` resolves on a fresh browser session.
 - **Phase 4**: each `/app/internal/{specialist,ops,admin,registry}` route renders the InProgressShell behind correct subRole guard; switching subRole in session (via DevTools localStorage edit) toggles access.
 
 Regression checks across phases:
