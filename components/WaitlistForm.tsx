@@ -99,10 +99,10 @@ const Field = ({
 )
 
 const inputClass =
-    "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 placeholder:text-[rgba(245,242,237,0.25)] placeholder:italic focus:outline-none focus:border-[#C9A961] transition-colors duration-150"
+    "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 rounded-sm placeholder:text-[rgba(245,242,237,0.25)] placeholder:italic focus:outline-none focus:border-[#C9A961] transition-colors duration-150"
 
 const selectClass =
-    "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 appearance-none focus:outline-none focus:border-[#C9A961] transition-colors duration-150 cursor-pointer"
+    "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 rounded-sm appearance-none focus:outline-none focus:border-[#C9A961] transition-colors duration-150 cursor-pointer"
 
 const Chevron = () => (
     <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">

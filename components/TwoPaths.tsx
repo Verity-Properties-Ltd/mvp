@@ -101,7 +101,7 @@ export default function TwoPaths() {
                                 {/* CTA button */}
                                 <Link
                                     href="#form-section"
-                                    className="tp-cta-light group self-start flex items-center gap-3 px-6 py-3.5 border border-[#1E2260] transition-all duration-200"
+                                    className="tp-cta-light group self-start flex items-center gap-3 px-6 py-3.5 border border-[#1E2260] rounded-sm transition-all duration-200"
                                     style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const, color: "#F5F2ED", backgroundColor: "#1E2260" }}
                                 >
                                     Join the buyer waitlist
@@ -175,7 +175,7 @@ export default function TwoPaths() {
                                 {/* CTA button */}
                                 <Link
                                     href="#form-section"
-                                    className="tp-cta-dark group self-start flex items-center gap-3 px-6 py-3.5 border border-[#C9A961] transition-all duration-200"
+                                    className="tp-cta-dark group self-start flex items-center gap-3 px-6 py-3.5 border border-[#C9A961] rounded-sm transition-all duration-200"
                                     style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const, color: "#1E2260", backgroundColor: "#C9A961" }}
                                 >
                                     Apply for Founding 50

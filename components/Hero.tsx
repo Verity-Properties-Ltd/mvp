@@ -202,7 +202,7 @@ export default function Hero() {
                         >
                             <a
                                 href="#waitlist-form"
-                                className="verity-primary-cta flex items-center gap-2.5"
+                                className="verity-primary-cta flex items-center gap-2.5 rounded-sm"
                                 style={{
                                     fontFamily: "var(--font-mono)",
                                     fontSize: 14,

@@ -1,5 +1,5 @@
-<!-- BEGIN:nextjs-agent-rules -->
-# This is NOT the Next.js you know
+# AGENTS.md
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
+This file has been merged into **`CLAUDE.md`** at the repo root, which is the single engineering source of truth for the Verity `mvp` frontend.
+
+Read `CLAUDE.md` (and the `docs/` reference files it points to). Keep this file as a pointer only — do not maintain instructions in two places.
