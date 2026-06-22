@@ -46,6 +46,28 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
+
+  /* Verity — brand tokens re-exported as Tailwind v4 theme values */
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-navy-soft: var(--navy-soft);
+  --color-cream: var(--cream);
+  --color-cream-shade: var(--cream-shade);
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-gold-deep: var(--gold-deep);
+  --color-slate: var(--slate);
+  --color-slate-soft: var(--slate-soft);
+  --color-white: var(--white);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-line-dark: var(--line-dark);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --color-teal: var(--teal);
+  --color-teal-light: var(--teal-light);
 }
 
 /* Verity — safe additions, no layout impact */
@@ -58,29 +80,51 @@ section[id] {
 }
 
 :focus-visible {
-  outline: 2px solid #1B3F6B;
+  outline: 2px solid var(--navy);
   outline-offset: 2px;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  /* Verity — brand tokens (kept in sync with app/styles/tokens/colors.css) */
+  --navy: #1E2260;
+  --navy-deep: #171A4A;
+  --navy-soft: #2C3078;
+  --cream: #F5F2ED;
+  --cream-shade: #EEEAE0;
+  --gold: #C9A961;
+  --gold-soft: #E0C994;
+  --gold-deep: #A88A45;
+  --slate: #6B6F77;
+  --slate-soft: #9DA1A8;
+  --white: #FFFFFF;
+  --teal: #0D7A5F;
+  --teal-light: #14B88A;
+  --line: rgba(30, 34, 96, 0.12);
+  --line-strong: rgba(30, 34, 96, 0.22);
+  --line-dark: rgba(245, 242, 237, 0.14);
+  --success: #3A7A5C;
+  --warning: #B8862A;
+  --danger: #A8302A;
+  --info: #3C5A9C;
+
+  --background: var(--cream);
+  --foreground: var(--navy);
+  --card: var(--white);
+  --card-foreground: var(--navy);
+  --popover: var(--white);
+  --popover-foreground: var(--navy);
+  --primary: var(--navy);
+  --primary-foreground: var(--cream);
+  --secondary: var(--cream-shade);
+  --secondary-foreground: var(--navy);
+  --muted: var(--cream-shade);
+  --muted-foreground: var(--slate);
+  --accent: var(--cream-shade);
+  --accent-foreground: var(--navy);
+  --destructive: var(--danger);
+  --border: var(--line);
+  --input: var(--line);
+  --ring: var(--gold);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

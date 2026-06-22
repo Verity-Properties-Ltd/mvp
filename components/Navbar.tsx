@@ -24,8 +24,8 @@ export default function Navbar() {
                 className={[
                     "sticky top-0 z-50 transition-all duration-300",
                     scrolled
-                        ? "bg-[#F5F2ED]/95 border-b border-[#1E2260]/10 backdrop-blur-xl"
-                        : "bg-[#F5F2ED]/80 border-b border-transparent backdrop-blur-md",
+                        ? "bg-cream/95 border-b border-navy/10 backdrop-blur-xl"
+                        : "bg-cream/80 border-b border-transparent backdrop-blur-md",
                 ].join(" ")}
             >
                 <div className="max-w-[1320px] mx-auto px-8 md:px-10 h-[66px] flex items-center justify-between">
@@ -46,9 +46,9 @@ export default function Navbar() {
                                 href={link.href}
                                 className="
                                     font-mono text-[11px] tracking-[0.18em] uppercase
-                                    text-[#6B6F77] border-b border-transparent pb-0.5
+                                    text-slate border-b border-transparent pb-0.5
                                     transition-all duration-200
-                                    hover:text-[#1E2260] hover:border-[#C9A961]
+                                    hover:text-navy hover:border-gold
                                 "
                             >
                                 {link.label}
@@ -60,12 +60,12 @@ export default function Navbar() {
                     <div className="flex items-center gap-4">
 
                         {/* Live status — desktop only */}
-                        <div className="hidden md:flex items-center gap-2 mr-2 pr-6 border-r border-[#1E2260]/10">
+                        <div className="hidden md:flex items-center gap-2 mr-2 pr-6 border-r border-navy/10">
                             <span
                                 aria-hidden="true"
-                                className="block w-[5px] h-[5px] rounded-full bg-[#C9A961] animate-[verity-pulse_2.4s_ease-in-out_infinite]"
+                                className="block w-[5px] h-[5px] rounded-full bg-gold animate-[verity-pulse_2.4s_ease-in-out_infinite]"
                             />
-                            <span className="font-mono text-[9px] tracking-[0.20em] uppercase text-[#9DA1A8]">
+                            <span className="font-mono text-[9px] tracking-[0.20em] uppercase text-slate-soft">
                                 In build · Lagos · 2026
                             </span>
                         </div>
@@ -76,10 +76,10 @@ export default function Navbar() {
                             className="
                                 hidden sm:inline-flex items-center gap-2
                                 font-mono text-[10px] tracking-[0.18em] uppercase
-                                text-[#F5F2ED] bg-[#1E2260] border border-[#1E2260]
+                                text-cream bg-navy border border-navy
                                 px-5 py-2.5 rounded-sm
                                 transition-all duration-200
-                                hover:bg-[#14174A] hover:border-[#14174A]
+                                hover:bg-navy-deep hover:border-navy-deep
                                 group
                             "
                         >
@@ -97,7 +97,7 @@ export default function Navbar() {
                             onClick={() => setMobileOpen(!mobileOpen)}
                             aria-label={mobileOpen ? "Close menu" : "Open menu"}
                             aria-expanded={mobileOpen}
-                            className="md:hidden p-1.5 text-[#1E2260]"
+                            className="md:hidden p-1.5 text-navy"
                         >
                             {mobileOpen ? (
                                 <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -117,7 +117,7 @@ export default function Navbar() {
 
                 {/* Mobile menu */}
                 {mobileOpen && (
-                    <div className="md:hidden bg-[#F5F2ED] border-t border-[#1E2260]/08 px-6 pt-5 pb-7">
+                    <div className="md:hidden bg-cream border-t border-navy/8 px-6 pt-5 pb-7">
                         <nav aria-label="Mobile navigation" className="flex flex-col">
                             {NAV_LINKS.map((link) => (
                                 <Link
@@ -126,13 +126,13 @@ export default function Navbar() {
                                     onClick={() => setMobileOpen(false)}
                                     className="
                                         font-mono text-[11px] tracking-[0.18em] uppercase
-                                        text-[#1E2260] no-underline
-                                        py-3.5 border-b border-[#1E2260]/07
+                                        text-navy no-underline
+                                        py-3.5 border-b border-navy/7
                                         flex justify-between items-center
                                     "
                                 >
                                     {link.label}
-                                    <span className="text-[#C9A961] text-xs">→</span>
+                                    <span className="text-gold text-xs">→</span>
                                 </Link>
                             ))}
                         </nav>
@@ -143,9 +143,9 @@ export default function Navbar() {
                                 onClick={() => setMobileOpen(false)}
                                 className="
                                     font-mono text-[11px] tracking-[0.18em] uppercase
-                                    text-[#F5F2ED] bg-[#1E2260] border border-[#1E2260]
+                                    text-cream bg-navy border border-navy
                                     py-3.5 px-5 w-full text-center block rounded-sm
-                                    hover:bg-[#14174A]
+                                    hover:bg-navy-deep
                                 "
                             >
                                 Join the waitlist →

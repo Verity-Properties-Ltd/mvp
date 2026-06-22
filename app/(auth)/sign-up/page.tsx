@@ -8,23 +8,16 @@ import {
     CheckCircle2, Users, Building2, Upload,
     ChevronRight,
 } from 'lucide-react';
+import { VerityMark } from '@/components/brand';
+import { authService, EmailExistsError, type Role } from '@/lib/services/auth/authService';
+import { setSession } from '@/lib/services/auth/session';
 
 // ─── Shared: Logo ─────────────────────────────────────────────────────────────
 const VerityLogo = () => (
     <div className="flex items-center gap-2">
-        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-            <path d="M16 2L4 7V16C4 22.627 9.373 28 16 30C22.627 28 28 22.627 28 16V7L16 2Z"
-                fill="url(#logo-grad)" />
-            <path d="M11 16L14.5 19.5L21 13" stroke="white" strokeWidth="2.2"
-                strokeLinecap="round" strokeLinejoin="round" />
-            <defs>
-                <linearGradient id="logo-grad" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#F0D080" /><stop offset="1" stopColor="#C9A84C" />
-                </linearGradient>
-            </defs>
-        </svg>
+        <VerityMark size={28} />
         <span className="text-white font-bold tracking-[0.15em] text-[15px] uppercase">
-            VERI<span className="text-[#C9A84C]">TY</span>
+            VERI<span className="text-gold">TY</span>
         </span>
     </div>
 );
@@ -34,7 +27,7 @@ const AuthNav = ({ rightLabel, rightHref }: { rightLabel: string; rightHref: str
     <nav className="flex items-center justify-between px-8 py-5 shrink-0">
         <VerityLogo />
         <Link href={rightHref}
-            className="text-sm text-[#C9A84C] underline underline-offset-4 hover:text-[#F0D080] transition-colors">
+            className="text-sm text-gold underline underline-offset-4 hover:text-gold-soft transition-colors">
             {rightLabel}
         </Link>
     </nav>
@@ -43,7 +36,7 @@ const AuthNav = ({ rightLabel, rightHref }: { rightLabel: string; rightHref: str
 // ─── Shared: Progress bar ─────────────────────────────────────────────────────
 const ProgressBar = ({ step, total }: { step: number; total: number }) => (
     <div className="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
-        <div className="h-full bg-[#C9A84C] rounded-full transition-all duration-500 ease-out"
+        <div className="h-full bg-gold rounded-full transition-all duration-500 ease-out"
             style={{ width: `${(step / total) * 100}%` }} />
     </div>
 );
@@ -68,7 +61,7 @@ const AuthInput = ({
                 onKeyDown={onKeyDown}
                 className={`w-full h-12 px-4 ${rightElement ? 'pr-12' : ''} bg-white/10 text-white
                     placeholder:text-white/30 rounded-2xl text-sm border outline-none transition-all
-                    focus:bg-white/15 focus:border-[#C9A84C]/60
+                    focus:bg-white/15 focus:border-gold/60
                     ${error ? 'border-red-400/60' : 'border-white/10'}`}
             />
             {rightElement && (
@@ -91,10 +84,10 @@ const AuthSelect = ({
         <label className="block text-[13px] font-medium text-white/70">{label}</label>
         <select value={value} onChange={(e) => onChange(e.target.value)}
             className={`w-full h-12 px-4 bg-white/10 text-white rounded-2xl text-sm border
-                outline-none transition-all focus:bg-white/15 focus:border-[#C9A84C]/60
+                outline-none transition-all focus:bg-white/15 focus:border-gold/60
                 appearance-none cursor-pointer
                 ${error ? 'border-red-400/60' : 'border-white/10'}
-                [&>option]:bg-[#0F2340] [&>option]:text-white`}>
+                [&>option]:bg-navy [&>option]:text-white`}>
             <option value="">Select state</option>
             {options.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
@@ -110,7 +103,7 @@ const GoldButton = ({
     disabled?: boolean; loading?: boolean;
 }) => (
     <button onClick={onClick} disabled={disabled || loading}
-        className="w-full h-12 bg-[#C9A84C] hover:bg-[#B8962E] disabled:opacity-50
+        className="w-full h-12 bg-gold hover:bg-gold-deep disabled:opacity-50
             disabled:cursor-not-allowed text-white font-semibold text-sm
             rounded-2xl transition-colors flex items-center justify-center gap-2">
         {loading ? (
@@ -142,9 +135,54 @@ interface RegForm {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// SCREEN 0 — ROLE PICKER
+// ═══════════════════════════════════════════════════════════════════════════════
+const RolePicker = ({ onSelect }: { onSelect: (role: Role) => void }) => (
+    <div className="min-h-screen bg-navy flex flex-col">
+        <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
+        <div className="flex-1 flex items-center justify-center px-4 py-10">
+            <div className="w-full max-w-[440px]">
+                <div className="mb-8">
+                    <h1 className="text-2xl font-bold text-white">How will you use Verity?</h1>
+                    <p className="text-sm text-white/40 mt-1">Choose the account type that fits you.</p>
+                </div>
+                <div className="space-y-3">
+                    <button onClick={() => onSelect('buyer')}
+                        className="w-full text-left flex items-center gap-4 px-5 py-4 rounded-2xl border border-white/10 bg-white/5 hover:border-gold/40 transition-all">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-gold/15">
+                            <Users className="w-5 h-5 text-gold" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-semibold text-white">I'm a buyer</p>
+                            <p className="text-xs text-white/40 mt-0.5">Verify a property before you buy.</p>
+                        </div>
+                    </button>
+                    <button onClick={() => onSelect('developer')}
+                        className="w-full text-left flex items-center gap-4 px-5 py-4 rounded-2xl border border-white/10 bg-white/5 hover:border-gold/40 transition-all">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-gold/15">
+                            <Building2 className="w-5 h-5 text-gold" />
+                        </div>
+                        <div>
+                            <p className="text-sm font-semibold text-white">I'm a developer</p>
+                            <p className="text-xs text-white/40 mt-0.5">Verify and distribute your portfolio.</p>
+                        </div>
+                    </button>
+                </div>
+                <p className="text-center text-sm text-white/30 mt-6">
+                    Already have an account?{' '}
+                    <Link href="/sign-in" className="text-gold hover:text-gold-soft transition-colors">
+                        Sign in
+                    </Link>
+                </p>
+            </div>
+        </div>
+    </div>
+);
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // SCREEN 1 — REGISTRATION
 // ═══════════════════════════════════════════════════════════════════════════════
-const RegistrationScreen = ({ onComplete }: { onComplete: (email: string) => void }) => {
+const RegistrationScreen = ({ onComplete }: { onComplete: (email: string, password: string) => void }) => {
     const [step, setStep] = useState(1);
     const [showPw, setShowPw] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
@@ -183,7 +221,7 @@ const RegistrationScreen = ({ onComplete }: { onComplete: (email: string) => voi
     const handleContinue = () => {
         if (!validate()) return;
         if (step < 3) { setStep((s) => s + 1); return; }
-        onComplete(form.email);
+        onComplete(form.email, form.password);
     };
 
     const stepFields = [
@@ -221,7 +259,7 @@ const RegistrationScreen = ({ onComplete }: { onComplete: (email: string) => voi
     ];
 
     return (
-        <div className="min-h-screen bg-[#062642] flex flex-col">
+        <div className="min-h-screen bg-navy flex flex-col">
             <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
             <div className="flex-1 flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-[440px]">
@@ -247,7 +285,7 @@ const RegistrationScreen = ({ onComplete }: { onComplete: (email: string) => voi
                     {step === 1 && (
                         <p className="text-center text-sm text-white/30 mt-4">
                             Already have an account?{' '}
-                            <Link href="/sign-in" className="text-[#C9A84C] hover:text-[#F0D080] transition-colors">
+                            <Link href="/sign-in" className="text-gold hover:text-gold-soft transition-colors">
                                 Sign in
                             </Link>
                         </p>
@@ -262,8 +300,8 @@ const RegistrationScreen = ({ onComplete }: { onComplete: (email: string) => voi
 // SCREEN 2 — EMAIL OTP VERIFICATION
 // ═══════════════════════════════════════════════════════════════════════════════
 const EmailVerificationScreen = ({
-    email, onVerified, onBack,
-}: { email: string; onVerified: () => void; onBack: () => void }) => {
+    email, password, role, onVerified, onBack,
+}: { email: string; password: string; role: Role; onVerified: () => void; onBack: () => void }) => {
     const [otp, setOtp] = useState(['', '', '', '', '', '']);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -304,8 +342,8 @@ const EmailVerificationScreen = ({
         if (code.length < 6) { setError('Please enter the full 6-digit code.'); return; }
         setLoading(true);
         await new Promise((r) => setTimeout(r, 900));
-        setLoading(false);
         if (code !== '123456') {
+            setLoading(false);
             setError('Incorrect code. Try again.');
             setShake(true);
             setOtp(['', '', '', '', '', '']);
@@ -313,17 +351,25 @@ const EmailVerificationScreen = ({
             setTimeout(() => setShake(false), 600);
             return;
         }
-        onVerified();
+        try {
+            const session = await authService.signUp(email, password, role);
+            setSession(session);
+            onVerified();
+        } catch (err) {
+            setError(err instanceof EmailExistsError ? err.message : 'Something went wrong. Please try again.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="min-h-screen bg-[#062642] flex flex-col">
+        <div className="min-h-screen bg-navy flex flex-col">
             <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
             <div className="flex-1 flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-[440px]">
-                    <div className="w-16 h-16 rounded-2xl bg-[#C9A84C]/15 border border-[#C9A84C]/20
+                    <div className="w-16 h-16 rounded-2xl bg-gold/15 border border-gold/20
                         flex items-center justify-center mx-auto mb-6">
-                        <Mail className="w-7 h-7 text-[#C9A84C]" />
+                        <Mail className="w-7 h-7 text-gold" />
                     </div>
                     <div className="text-center mb-7">
                         <h2 className="text-2xl font-bold text-white">Check your email</h2>
@@ -346,8 +392,8 @@ const EmailVerificationScreen = ({
                                     onPaste={handlePaste}
                                     className={`w-11 h-14 text-center text-xl font-bold text-white
                                         bg-white/10 rounded-xl border outline-none transition-all
-                                        focus:border-[#C9A84C] focus:bg-white/15
-                                        ${error ? 'border-red-400/60' : digit ? 'border-[#C9A84C]/50' : 'border-white/10'}`}
+                                        focus:border-gold focus:bg-white/15
+                                        ${error ? 'border-red-400/60' : digit ? 'border-gold/50' : 'border-white/10'}`}
                                 />
                             ))}
                         </div>
@@ -367,7 +413,7 @@ const EmailVerificationScreen = ({
                                 </p>
                             ) : (
                                 <button onClick={() => { setResendTimer(60); setOtp(['', '', '', '', '', '']); setError(''); }}
-                                    className="text-xs text-[#C9A84C] hover:text-[#F0D080] transition-colors font-medium">
+                                    className="text-xs text-gold hover:text-gold-soft transition-colors font-medium">
                                     Resend code
                                 </button>
                             )}
@@ -391,9 +437,9 @@ const OnboardingChecklist = () => {
     const router = useRouter();
 
     const tasks = [
-        { label: 'Upload your first document', desc: 'Add a company document to begin your verification process.', icon: Upload, done: true, href: '/dashboard/upload' },
-        { label: 'Complete company profile', desc: 'Add your company logo, description, and contact details.', icon: Building2, done: true, href: '/dashboard' },
-        { label: 'Invite a team member', desc: 'Collaborate with your team by inviting colleagues.', icon: Users, done: false, href: '/dashboard' },
+        { label: 'Upload your first document', desc: 'Add a company document to begin your verification process.', icon: Upload, done: true, href: '/app/developer/upload' },
+        { label: 'Complete company profile', desc: 'Add your company logo, description, and contact details.', icon: Building2, done: true, href: '/app/developer' },
+        { label: 'Invite a team member', desc: 'Collaborate with your team by inviting colleagues.', icon: Users, done: false, href: '/app/developer' },
     ];
 
     const completedCount = tasks.filter((t) => t.done).length;
@@ -402,7 +448,7 @@ const OnboardingChecklist = () => {
     const r = 18; const circ = 2 * Math.PI * r; const dash = (percent / 100) * circ;
 
     return (
-        <div className="min-h-screen bg-[#062642] flex flex-col">
+        <div className="min-h-screen bg-navy flex flex-col">
             <AuthNav rightLabel="Sign in" rightHref="/sign-in" />
             <div className="flex-1 flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-[480px]">
@@ -414,15 +460,15 @@ const OnboardingChecklist = () => {
                     <div className="bg-white/5 border border-white/10 rounded-2xl px-5 py-4 mb-3 flex items-center justify-between">
                         <div>
                             <p className="text-xs text-white/40 font-medium">Setup progress</p>
-                            <p className="text-[17px] font-bold text-[#C9A84C] mt-0.5">{completedCount} of {tasks.length} completed</p>
+                            <p className="text-[17px] font-bold text-gold mt-0.5">{completedCount} of {tasks.length} completed</p>
                         </div>
                         <div className="relative w-12 h-12">
                             <svg width="48" height="48" viewBox="0 0 48 48" className="-rotate-90">
                                 <circle cx="24" cy="24" r={r} fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="4" />
-                                <circle cx="24" cy="24" r={r} fill="none" stroke="#C9A84C" strokeWidth="4"
+                                <circle cx="24" cy="24" r={r} fill="none" stroke="var(--gold)" strokeWidth="4"
                                     strokeDasharray={`${dash} ${circ}`} strokeLinecap="round" />
                             </svg> 
-                            <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold text-[#C9A84C]">{percent}%</span>
+                            <span className="absolute inset-0 flex items-center justify-center text-[11px] font-bold text-gold">{percent}%</span>
                         </div>
                     </div> 
                     {/* Tasks */}
@@ -432,14 +478,14 @@ const OnboardingChecklist = () => {
                             return (
                                 <div key={i} onClick={() => !task.done && router.push(task.href)}
                                     className={`flex items-center gap-4 px-5 py-4 rounded-2xl border transition-all
-                                        ${task.done ? 'bg-white/5 border-white/10' : 'bg-white/5 border-white/10 hover:border-[#C9A84C]/40 cursor-pointer'}`}>
-                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${task.done ? 'bg-[#C9A84C]/15' : 'bg-white/8'}`}>
+                                        ${task.done ? 'bg-white/5 border-white/10' : 'bg-white/5 border-white/10 hover:border-gold/40 cursor-pointer'}`}>
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${task.done ? 'bg-gold/15' : 'bg-white/8'}`}>
                                         {task.done
-                                            ? <CheckCircle2 className="w-5 h-5 text-[#C9A84C]" />
+                                            ? <CheckCircle2 className="w-5 h-5 text-gold" />
                                             : <Icon className="w-4 h-4 text-white/40" />}
                                     </div>
                                     <div className="flex-1 min-w-0">
-                                        <p className={`text-sm font-semibold leading-tight ${task.done ? 'text-[#C9A84C]' : 'text-white'}`}>{task.label}</p>
+                                        <p className={`text-sm font-semibold leading-tight ${task.done ? 'text-gold' : 'text-white'}`}>{task.label}</p>
                                         <p className="text-xs text-white/40 mt-0.5 leading-snug">{task.desc}</p>
                                     </div>
                                     {!task.done && <ChevronRight className="w-4 h-4 text-white/30 shrink-0" />}
@@ -447,10 +493,10 @@ const OnboardingChecklist = () => {
                             );
                         })}
                     </div>
-                    <GoldButton onClick={() => router.push(nextTask?.href ?? '/dashboard/upload')}>
+                    <GoldButton onClick={() => router.push(nextTask?.href ?? '/app/developer/upload')}>
                         {nextTask ? 'Upload your document' : 'Go to Dashboard →'}
                     </GoldButton>
-                    <button onClick={() => router.push('/dashboard')}
+                    <button onClick={() => router.push('/app/developer')}
                         className="w-full text-center text-sm text-white/25 hover:text-white/50 transition-colors mt-4">
                         Skip for now
                     </button>
@@ -461,7 +507,7 @@ const OnboardingChecklist = () => {
                 input:-webkit-autofill,
                 input:-webkit-autofill:hover,
                 input:-webkit-autofill:focus {
-                    -webkit-box-shadow: 0 0 0px 1000px #1a2e45 inset !important;
+                    -webkit-box-shadow: 0 0 0px 1000px var(--navy-deep) inset !important;
                     -webkit-text-fill-color: white !important;
                     caret-color: white;
                     transition: background-color 5000s ease-in-out 0s;
@@ -474,17 +520,32 @@ const OnboardingChecklist = () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 // ROOT — Orchestrates the full flow
 // ═══════════════════════════════════════════════════════════════════════════════
-type Screen = 'register' | 'verify' | 'checklist';
+type Screen = 'role' | 'register' | 'verify' | 'checklist';
 
 export default function RegisterPage() {
-    const [screen, setScreen] = useState<Screen>('register');
+    const router = useRouter();
+    const [screen, setScreen] = useState<Screen>('role');
+    const [role, setRole] = useState<Role>('buyer');
     const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
+    if (screen === 'role') return (
+        <RolePicker onSelect={(r) => { setRole(r); setScreen('register'); }} />
+    );
     if (screen === 'register') return (
-        <RegistrationScreen onComplete={(e) => { setEmail(e); setScreen('verify'); }} />
+        <RegistrationScreen onComplete={(e, p) => { setEmail(e); setPassword(p); setScreen('verify'); }} />
     );
     if (screen === 'verify') return (
-        <EmailVerificationScreen email={email} onVerified={() => setScreen('checklist')} onBack={() => setScreen('register')} />
+        <EmailVerificationScreen
+            email={email}
+            password={password}
+            role={role}
+            onVerified={() => {
+                if (role === 'developer') { setScreen('checklist'); return; }
+                router.push('/app/buyer');
+            }}
+            onBack={() => setScreen('register')}
+        />
     );
     return <OnboardingChecklist />;
 }

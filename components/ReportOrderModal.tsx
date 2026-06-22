@@ -119,26 +119,22 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
 
     return (
         <div
-            className="fixed inset-0 z-[300] flex items-end sm:items-center justify-center p-0 sm:p-4"
-            style={{ background: "rgba(0,0,0,0.5)" }}
+            className="fixed inset-0 z-[300] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/50"
             onClick={(e) => {
                 if (e.target === e.currentTarget && step < 3) onClose();
             }}
         >
             <div
-                className="bg-white w-full sm:max-w-[560px] sm:rounded-2xl rounded-t-2xl overflow-hidden"
-                style={{ boxShadow: "0 25px 80px rgba(0,0,0,0.3)", maxHeight: "95vh", overflowY: "auto" }}
+                className="bg-white w-full sm:max-w-[560px] sm:rounded-2xl rounded-t-2xl overflow-hidden shadow-2xl"
+                style={{ maxHeight: "95vh", overflowY: "auto" }}
             >
                 {/* Header */}
-                <div
-                    className="flex items-center justify-between px-6 py-5 border-b"
-                    style={{ borderColor: "#F3F4F6" }}
-                >
+                <div className="flex items-center justify-between px-6 py-5 border-b border-cream-shade">
                     <div className="flex items-center gap-3">
                         {step > 1 && step < 4 && (
                             <button
                                 onClick={() => setStep(step - 1)}
-                                className="text-[#0D7A5F] flex items-center gap-1 text-sm font-medium hover:opacity-70 transition-opacity"
+                                className="text-teal flex items-center gap-1 text-sm font-medium hover:opacity-70 transition-opacity"
                             >
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                     <path d="M19 12H5M12 5l-7 7 7 7" />
@@ -147,8 +143,8 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                             </button>
                         )}
                         <h2
-                            className="font-bold text-lg"
-                            style={{ color: "#1B3F6B", fontFamily: "var(--font-display)" }}
+                            className="font-bold text-lg text-navy"
+                            style={{ fontFamily: "var(--font-display)" }}
                         >
                             {step === 1 && "Verify a Property"}
                             {step === 2 && "Choose Your Report Tier"}
@@ -159,7 +155,7 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                     {step !== 4 && (
                         <button
                             onClick={onClose}
-                            className="text-gray-400 hover:text-gray-700 text-2xl font-light w-8 h-8 flex items-center justify-center rounded-lg hover:bg-gray-100 transition-colors"
+                            className="text-slate-soft hover:text-navy text-2xl font-light w-8 h-8 flex items-center justify-center rounded-lg hover:bg-cream-shade transition-colors"
                         >
                             ×
                         </button>
@@ -172,11 +168,8 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                         {[1, 2, 3].map((s, i) => (
                             <div key={s} className="flex items-center">
                                 <div
-                                    className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200"
-                                    style={{
-                                        background: s < step ? "#15803D" : s === step ? "#0D7A5F" : "#E5E7EB",
-                                        color: s <= step ? "white" : "#9CA3AF",
-                                    }}
+                                    className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-200 ${s <= step ? "text-white" : "text-slate-soft"
+                                        } ${s < step ? "bg-success" : s === step ? "bg-teal" : "bg-cream-shade"}`}
                                 >
                                     {s < step ? (
                                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -185,10 +178,7 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                                     ) : s}
                                 </div>
                                 {i < 2 && (
-                                    <div
-                                        className="h-[2px] w-16"
-                                        style={{ background: s < step ? "#15803D" : "#E5E7EB" }}
-                                    />
+                                    <div className={`h-[2px] w-16 ${s < step ? "bg-success" : "bg-cream-shade"}`} />
                                 )}
                             </div>
                         ))}
@@ -201,7 +191,7 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                     {step === 1 && (
                         <div className="flex flex-col gap-5">
                             <div>
-                                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "#6B7280" }}>
+                                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-slate">
                                     Property Address
                                 </label>
                                 <input
@@ -209,12 +199,11 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                                     placeholder="Enter property address, e.g. 15 Bourdillon Road, Ikoyi"
                                     value={address}
                                     onChange={(e) => setAddress(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all duration-150 focus:border-[#1B3F6B] focus:shadow-[0_0_0_3px_rgba(27,63,107,0.08)]"
-                                    style={{ borderColor: "#D1D5DB", color: "#111827" }}
+                                    className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all duration-150 border-line text-navy focus:border-navy focus:shadow-[0_0_0_3px_var(--line-strong)]"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "#6B7280" }}>
+                                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-slate">
                                     Email Address
                                 </label>
                                 <input
@@ -222,24 +211,23 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                                     placeholder="Your email — report delivered here"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all duration-150 focus:border-[#1B3F6B] focus:shadow-[0_0_0_3px_rgba(27,63,107,0.08)]"
-                                    style={{ borderColor: "#D1D5DB", color: "#111827" }}
+                                    className="w-full px-4 py-3 rounded-lg border text-sm outline-none transition-all duration-150 border-line text-navy focus:border-navy focus:shadow-[0_0_0_3px_var(--line-strong)]"
                                 />
                             </div>
 
                             {/* WhatsApp opt-in */}
-                            <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: "#F9FAFB", border: "1px solid #F3F4F6" }}>
+                            <div className="flex items-center justify-between p-4 rounded-xl bg-cream-shade border border-cream-shade">
                                 <div>
-                                    <p className="text-sm font-medium" style={{ color: "#1B3F6B" }}>WhatsApp notification</p>
-                                    <p className="text-xs" style={{ color: "#6B7280" }}>Send me a notification when my report is ready</p>
+                                    <p className="text-sm font-medium text-navy">WhatsApp notification</p>
+                                    <p className="text-xs text-slate">Send me a notification when my report is ready</p>
                                 </div>
                                 <button
                                     onClick={() => setWhatsappOptIn(!whatsappOptIn)}
-                                    className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200"
-                                    style={{ background: whatsappOptIn ? "#0D7A5F" : "#D1D5DB" }}
+                                    className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ${whatsappOptIn ? "bg-teal" : "bg-line-strong"
+                                        }`}
                                 >
                                     <span
-                                        className="inline-block h-4 w-4 rounded-full bg-white shadow transition-transform duration-200"
+                                        className="inline-block h-4 w-4 rounded-full bg-white transition-transform duration-200"
                                         style={{ transform: whatsappOptIn ? "translateX(22px)" : "translateX(2px)" }}
                                     />
                                 </button>
@@ -247,14 +235,11 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
 
                             {whatsappOptIn && (
                                 <div>
-                                    <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: "#6B7280" }}>
+                                    <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-slate">
                                         WhatsApp Number
                                     </label>
                                     <div className="flex">
-                                        <span
-                                            className="px-3 py-3 rounded-l-lg border border-r-0 text-sm font-medium"
-                                            style={{ background: "#F9FAFB", borderColor: "#D1D5DB", color: "#374151" }}
-                                        >
+                                        <span className="px-3 py-3 rounded-l-lg border border-r-0 text-sm font-medium bg-cream-shade border-line text-slate">
                                             +234
                                         </span>
                                         <input
@@ -262,8 +247,7 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                                             placeholder="8000000000"
                                             value={phone}
                                             onChange={(e) => setPhone(e.target.value)}
-                                            className="flex-1 px-4 py-3 rounded-r-lg border text-sm outline-none focus:border-[#1B3F6B]"
-                                            style={{ borderColor: "#D1D5DB", color: "#111827" }}
+                                            className="flex-1 px-4 py-3 rounded-r-lg border text-sm outline-none border-line text-navy focus:border-navy"
                                         />
                                     </div>
                                 </div>
@@ -272,12 +256,11 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                             <button
                                 onClick={() => setStep(2)}
                                 disabled={!isStep1Valid}
-                                className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
-                                style={{ background: "#0D7A5F" }}
+                                className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed bg-teal"
                             >
                                 Continue →
                             </button>
-                            <p className="text-center text-xs" style={{ color: "#9CA3AF" }}>
+                            <p className="text-center text-xs text-slate-soft">
                                 Your contact details are used only for report delivery. We do not share your data.
                             </p>
                         </div>
@@ -290,31 +273,26 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                                 <button
                                     key={tier.id}
                                     onClick={() => setSelectedTier(tier.id)}
-                                    className="flex items-center justify-between p-4 rounded-xl border text-left transition-all duration-150 w-full"
-                                    style={{
-                                        borderColor: selectedTier === tier.id ? "#0D7A5F" : "#E5E7EB",
-                                        borderWidth: selectedTier === tier.id ? "2px" : "1.5px",
-                                        background: selectedTier === tier.id ? "#E6F4F0" : "white",
-                                    }}
+                                    className={`flex items-center justify-between p-4 rounded-xl border text-left transition-all duration-150 w-full ${selectedTier === tier.id
+                                            ? "border-2 border-teal bg-teal/12"
+                                            : "border-[1.5px] border-line bg-white"
+                                        }`}
                                 >
                                     <div className="flex items-center gap-3">
                                         <div
-                                            className="w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                                            style={{
-                                                borderColor: selectedTier === tier.id ? "#0D7A5F" : "#D1D5DB",
-                                                background: selectedTier === tier.id ? "#0D7A5F" : "white",
-                                            }}
+                                            className={`w-5 h-5 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${selectedTier === tier.id ? "border-teal bg-teal" : "border-line bg-white"
+                                                }`}
                                         >
                                             {selectedTier === tier.id && (
                                                 <div className="w-2 h-2 rounded-full bg-white" />
                                             )}
                                         </div>
                                         <div>
-                                            <p className="font-semibold text-sm" style={{ color: "#1B3F6B" }}>{tier.name}</p>
-                                            <p className="text-xs" style={{ color: "#6B7280" }}>{tier.turnaround} · {tier.desc}</p>
+                                            <p className="font-semibold text-sm text-navy">{tier.name}</p>
+                                            <p className="text-xs text-slate">{tier.turnaround} · {tier.desc}</p>
                                         </div>
                                     </div>
-                                    <span className="font-bold text-base flex-shrink-0 ml-2" style={{ color: "#1B3F6B" }}>
+                                    <span className="font-bold text-base flex-shrink-0 ml-2 text-navy">
                                         {tier.price}
                                     </span>
                                 </button>
@@ -322,8 +300,7 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
 
                             <button
                                 onClick={() => setStep(3)}
-                                className="w-full py-3.5 mt-2 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98]"
-                                style={{ background: "#0D7A5F" }}
+                                className="w-full py-3.5 mt-2 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98] bg-teal"
                             >
                                 Continue →
                             </button>
@@ -334,29 +311,26 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                     {step === 3 && (
                         <div className="flex flex-col gap-5">
                             {/* Order summary */}
-                            <div className="rounded-xl p-5" style={{ background: "#F9FAFB", border: "1px solid #F3F4F6" }}>
-                                <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: "#9CA3AF" }}>Order Summary</p>
-                                <p className="font-semibold text-sm mb-1" style={{ color: "#111827" }}>{address}</p>
-                                <div className="flex items-center justify-between mt-3 pt-3 border-t" style={{ borderColor: "#E5E7EB" }}>
+                            <div className="rounded-xl p-5 bg-cream-shade border border-cream-shade">
+                                <p className="text-xs font-semibold uppercase tracking-wider mb-3 text-slate-soft">Order Summary</p>
+                                <p className="font-semibold text-sm mb-1 text-navy">{address}</p>
+                                <div className="flex items-center justify-between mt-3 pt-3 border-t border-line">
                                     <div>
-                                        <span
-                                            className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full"
-                                            style={{ background: "#E6F4F0", color: "#0D7A5F" }}
-                                        >
+                                        <span className="inline-block text-xs font-semibold px-2.5 py-1 rounded-full bg-teal/12 text-teal">
                                             {selectedTierObj.name}
                                         </span>
                                     </div>
                                     <div className="text-right">
-                                        <span className="font-bold text-2xl" style={{ color: "#1B3F6B", fontFamily: "var(--font-display)" }}>
+                                        <span className="font-bold text-2xl text-navy" style={{ fontFamily: "var(--font-display)" }}>
                                             {selectedTierObj.price}
                                         </span>
-                                        <p className="text-xs" style={{ color: "#9CA3AF" }}>+ VAT where applicable</p>
+                                        <p className="text-xs text-slate-soft">+ VAT where applicable</p>
                                     </div>
                                 </div>
                             </div>
 
                             {payError && (
-                                <div className="px-4 py-3 rounded-lg text-sm" style={{ background: "#FEE2E2", color: "#DC2626" }}>
+                                <div className="px-4 py-3 rounded-lg text-sm bg-danger/15 text-danger">
                                     {payError}
                                 </div>
                             )}
@@ -364,21 +338,20 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                             <button
                                 onClick={handlePay}
                                 disabled={loading}
-                                className="w-full py-4 rounded-xl font-semibold text-white text-base transition-all duration-150 active:scale-[0.98] disabled:opacity-60"
-                                style={{ background: "#0D7A5F" }}
+                                className="w-full py-4 rounded-xl font-semibold text-white text-base transition-all duration-150 active:scale-[0.98] disabled:opacity-60 bg-teal"
                             >
                                 {loading ? "Processing..." : `Pay ${selectedTierObj.price}`}
                             </button>
 
                             <div className="text-center">
                                 <div className="flex items-center justify-center gap-2 mb-1">
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2">
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--slate-soft)" strokeWidth="2">
                                         <rect x="3" y="11" width="18" height="11" rx="2" />
                                         <path d="M7 11V7a5 5 0 0110 0v4" />
                                     </svg>
-                                    <span className="text-xs" style={{ color: "#9CA3AF" }}>Secured by Paystack</span>
+                                    <span className="text-xs text-slate-soft">Secured by Paystack</span>
                                 </div>
-                                <p className="text-xs" style={{ color: "#9CA3AF" }}>
+                                <p className="text-xs text-slate-soft">
                                     Diaspora buyers (UK, US, Canada, UAE) — GBP/USD/EUR cards accepted via Flutterwave.
                                 </p>
                             </div>
@@ -388,56 +361,49 @@ export default function ReportOrderModal({ isOpen, onClose, preSelectedTier }: R
                     {/* Step 4 — Confirmation */}
                     {step === 4 && (
                         <div className="text-center py-6">
-                            <div
-                                className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6"
-                                style={{ background: "#DCFCE7" }}
-                            >
+                            <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 bg-success/15">
                                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none">
-                                    <path d="M20 6L9 17L4 12" stroke="#15803D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                    <path d="M20 6L9 17L4 12" stroke="var(--success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </div>
 
                             <h2
-                                className="font-bold text-2xl mb-3"
-                                style={{ color: "#1B3F6B", fontFamily: "var(--font-display)" }}
+                                className="font-bold text-2xl mb-3 text-navy"
+                                style={{ fontFamily: "var(--font-display)" }}
                             >
                                 Your order is confirmed.
                             </h2>
-                            <p className="text-sm mb-6" style={{ color: "#374151" }}>
+                            <p className="text-sm mb-6 text-slate">
                                 We&apos;ve received your request and payment. Our team is on it.
                             </p>
 
-                            <div
-                                className="rounded-xl p-5 mb-6 text-left"
-                                style={{ background: "#F9FAFB", border: "1px solid #F3F4F6" }}
-                            >
-                                <p className="text-sm mb-2" style={{ color: "#374151" }}>
+                            <div className="rounded-xl p-5 mb-6 text-left bg-cream-shade border border-cream-shade">
+                                <p className="text-sm mb-2 text-slate">
                                     Your verification report will be delivered to{" "}
-                                    <span className="font-semibold" style={{ color: "#1B3F6B" }}>{email}</span>{" "}
+                                    <span className="font-semibold text-navy">{email}</span>{" "}
                                     by <span className="font-semibold">{getDeliveryDate(selectedTier)}</span>.
                                 </p>
-                                <div className="flex items-center gap-2 mt-4 pt-4 border-t" style={{ borderColor: "#E5E7EB" }}>
-                                    <span className="text-xs" style={{ color: "#9CA3AF" }}>Reference:</span>
+                                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-line">
+                                    <span className="text-xs text-slate-soft">Reference:</span>
                                     <span
-                                        className="text-sm font-bold tracking-wider"
-                                        style={{ color: "#1B3F6B", fontFamily: "monospace" }}
+                                        className="text-sm font-bold tracking-wider text-navy"
+                                        style={{ fontFamily: "monospace" }}
                                     >
                                         {reference || `VRT-2026-${orderId || "000001"}`}
                                     </span>
                                 </div>
-                                <p className="text-xs mt-1" style={{ color: "#9CA3AF" }}>
+                                <p className="text-xs mt-1 text-slate-soft">
                                     Quote this in any correspondence with us.
                                 </p>
                             </div>
 
                             <button
                                 onClick={onClose}
-                                className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98]"
-                                style={{ background: "#0D7A5F" }}
+                                className="w-full py-3.5 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98] bg-teal"
                             >
                                 Done
                             </button>
-                            <button className="mt-3 text-sm w-full text-center transition-colors hover:opacity-70" style={{ color: "#0D7A5F" }}>
+                            <button className="mt-3 text-sm w-full text-center transition-colors hover:opacity-70 text-teal">
                                 Upload documents to speed up verification →
                             </button>
                         </div>

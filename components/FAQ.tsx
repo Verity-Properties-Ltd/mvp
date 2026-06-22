@@ -40,9 +40,8 @@ export default function FAQ() {
         <section
             id="faq"
             aria-label="Frequently asked questions"
-            className="w-full relative overflow-hidden"
+            className="w-full relative overflow-hidden bg-navy"
             style={{
-                background: "#062642",
                 scrollMarginTop: "80px",
                 paddingTop: "96px",
                 paddingBottom: "96px",
@@ -67,21 +66,15 @@ export default function FAQ() {
                 {/* Header */}
                 <div className="text-center mb-12">
                     <p
-                        className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full mx-auto"
-                        style={{
-                            background: "rgba(201,168,76,0.12)",
-                            color: "#C9A84C",
-                            border: "1px solid rgba(201,168,76,0.3)",
-                        }}
+                        className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full mx-auto text-gold bg-gold/12 border border-gold/30"
                     >
                         Frequently Asked Questions
                     </p>
                     <h2
-                        className="font-extrabold text-white leading-[1.1]"
+                        className="font-extrabold leading-[1.1] text-white/85"
                         style={{
                             fontSize: "clamp(28px, 4vw, 48px)",
                             fontFamily: "var(--font-display)",
-                            color: "rgba(255,255,255,0.85)",
                         }}
                     >
                         Everything you need to know{" "}
@@ -91,45 +84,32 @@ export default function FAQ() {
                 </div>
 
                 {/* Accordion container */}
-                <div
-                    className="rounded-2xl overflow-hidden mb-10"
-                    style={{
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                    }}
-                >
+                <div className="rounded-2xl overflow-hidden mb-10 bg-white/4 border border-white/10">
                     {faqs.map((faq, i) => {
                         const isOpen = open === i;
                         return (
                             <div
                                 key={i}
-                                style={{
-                                    borderBottom: i < faqs.length - 1
-                                        ? "1px solid rgba(255,255,255,0.07)"
-                                        : undefined,
-                                }}
+                                className={i < faqs.length - 1 ? "border-b border-white/7" : undefined}
                             >
                                 <button
                                     type="button"
-                                    className="w-full flex items-center justify-between px-7 py-5 text-left transition-colors duration-150 gap-6"
-                                    style={{
-                                        background: isOpen ? "rgba(255,255,255,0.04)" : "transparent",
-                                    }}
+                                    className={`w-full flex items-center justify-between px-7 py-5 text-left transition-colors duration-150 gap-6 ${isOpen ? "bg-white/4" : "bg-transparent"
+                                        }`}
                                     onClick={() => setOpen(isOpen ? null : i)}
                                     aria-expanded={isOpen}
                                 >
                                     <span
-                                        className="text-sm font-medium leading-snug"
-                                        style={{ color: isOpen ? "white" : "rgba(255,255,255,0.8)" }}
+                                        className={`text-sm font-medium leading-snug ${isOpen ? "text-white" : "text-white/80"
+                                            }`}
                                     >
                                         {faq.q}
                                     </span>
 
                                     {/* Chevron icon */}
                                     <span
-                                        className="flex-shrink-0 transition-transform duration-200"
+                                        className="flex-shrink-0 transition-transform duration-200 text-gold"
                                         style={{
-                                            color: "#C9A84C",
                                             transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
                                         }}
                                     >
@@ -141,10 +121,7 @@ export default function FAQ() {
 
                                 {isOpen && (
                                     <div className="px-7 pb-6">
-                                        <p
-                                            className="text-sm leading-relaxed"
-                                            style={{ color: "rgba(255,255,255,0.5)" }}
-                                        >
+                                        <p className="text-sm leading-relaxed text-white/50">
                                             {faq.a}
                                         </p>
                                     </div>
@@ -156,15 +133,14 @@ export default function FAQ() {
 
                 {/* Bottom CTA — inline, minimal */}
                 <div className="flex items-center justify-center gap-2 text-sm">
-                    <span style={{ color: "rgba(255,255,255,0.4)" }}>
+                    <span className="text-white/40">
                         Still have questions?
                     </span>
                     <a
                         href="https://wa.me/14692516652?text=Hi%20Verity%2C%20I%20have%20a%20question"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="font-semibold transition-opacity duration-150 hover:opacity-70 flex items-center gap-1"
-                        style={{ color: "#C9A84C" }}
+                        className="font-semibold transition-opacity duration-150 hover:opacity-70 flex items-center gap-1 text-gold"
                     >
                         Talk to our team →
                     </a>

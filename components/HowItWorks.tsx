@@ -40,9 +40,8 @@ export default function HowItWorks() {
         <section
             id="how-it-works"
             aria-label="How Verity works"
-            className="w-full relative overflow-hidden"
+            className="w-full relative overflow-hidden bg-navy"
             style={{
-                background: "#062642",
                 scrollMarginTop: "80px",
                 paddingTop: "96px",
                 paddingBottom: "96px",
@@ -67,12 +66,7 @@ export default function HowItWorks() {
                 {/* Header */}
                 <div className="text-center mb-16">
                     <p
-                        className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full mx-auto"
-                        style={{
-                            background: "rgba(201,168,76,0.12)",
-                            color: "#C9A84C",
-                            border: "1px solid rgba(201,168,76,0.3)",
-                        }}
+                        className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full mx-auto text-gold bg-gold/12 border border-gold/30"
                     >
                         How it works
                     </p>
@@ -87,10 +81,9 @@ export default function HowItWorks() {
                         Verify any property in three steps
                     </h2>
                     <p
-                        className="mx-auto"
+                        className="mx-auto text-white/50"
                         style={{
                             fontSize: "clamp(14px, 1.5vw, 16px)",
-                            color: "rgba(255,255,255,0.5)",
                             maxWidth: "480px",
                             lineHeight: 1.6,
                         }}
@@ -104,33 +97,16 @@ export default function HowItWorks() {
                     {steps.map((step) => (
                         <div
                             key={step.title}
-                            className="relative rounded-2xl p-8 flex flex-col gap-6 overflow-hidden transition-all duration-200"
-                            style={{
-                                background: step.active
-                                    ? "rgba(255,255,255,0.08)"
-                                    : "rgba(255,255,255,0.04)",
-                                border: step.active
-                                    ? "1px solid rgba(255,255,255,0.15)"
-                                    : "1px solid rgba(255,255,255,0.08)",
-                            }}
+                            className={`relative rounded-2xl p-8 flex flex-col gap-6 overflow-hidden transition-all duration-200 border ${step.active ? "bg-white/8 border-white/15" : "bg-white/4 border-white/8"
+                                }`}
                         >
                             {/* Teal top accent bar — active card only */}
                             {step.active && (
-                                <div
-                                    className="absolute top-0 left-8 right-8 h-[2px] rounded-full"
-                                    style={{ background: "linear-gradient(90deg, #0D7A5F, #14B88A)" }}
-                                />
+                                <div className="absolute top-0 left-8 right-8 h-[2px] rounded-full bg-teal" />
                             )}
 
                             {/* Icon */}
-                            <div
-                                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                                style={{
-                                    background: "rgba(201,168,76,0.12)",
-                                    color: "#C9A84C",
-                                    border: "1px solid rgba(201,168,76,0.2)",
-                                }}
-                            >
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 text-gold bg-gold/12 border border-gold/20">
                                 {step.icon}
                             </div>
 
@@ -141,10 +117,7 @@ export default function HowItWorks() {
                                 >
                                     {step.title}
                                 </h3>
-                                <p
-                                    className="text-sm leading-relaxed"
-                                    style={{ color: "rgba(255,255,255,0.55)" }}
-                                >
+                                <p className="text-sm leading-relaxed text-white/55">
                                     {step.body}
                                 </p>
                             </div>

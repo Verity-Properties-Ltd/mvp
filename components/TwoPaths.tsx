@@ -30,7 +30,7 @@ export default function TwoPaths() {
                 <svg aria-hidden="true" className="absolute inset-0 w-full h-full pointer-events-none">
                     <defs>
                         <pattern id="tp-grid" x="0" y="0" width="56" height="56" patternUnits="userSpaceOnUse">
-                            <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(30,34,96,0.05)" strokeWidth="0.7" />
+                            <path d="M 56 0 L 0 0 0 56" fill="none" stroke="var(--navy)" strokeOpacity={0.05} strokeWidth="0.7" />
                         </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#tp-grid)" />
@@ -40,8 +40,8 @@ export default function TwoPaths() {
 
                     {/* ── Eyebrow ── */}
                     <div className={`flex items-center gap-4 mb-16 transition-all duration-700 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-3"}`}>
-                        <span className="block w-7 h-px bg-[#C9A961] flex-shrink-0" />
-                        <span style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.26em", textTransform: "uppercase" as const, color: "#1E2260" }}>
+                        <span className="block w-7 h-px bg-gold flex-shrink-0" />
+                        <span className="text-navy" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.26em", textTransform: "uppercase" as const }}>
                             Two paths · Choose your starting point
                         </span>
                     </div>
@@ -50,17 +50,17 @@ export default function TwoPaths() {
                     <div className="grid grid-cols-1 lg:grid-cols-2">
 
                         {/* ── CARD I: BUYERS ── */}
-                        <div className={`relative flex flex-col border border-[#1E2260]/12 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+                        <div className={`relative flex flex-col border border-navy/12 transition-all duration-700 delay-100 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
 
                             {/* Top bar with label */}
-                            <div className="flex items-center justify-between px-10 md:px-14 pt-10 md:pt-12 pb-8 border-b border-[#1E2260]/08">
+                            <div className="flex items-center justify-between px-10 md:px-14 pt-10 md:pt-12 pb-8 border-b border-navy/8">
                                 <div className="flex items-center gap-3">
-                                    <span className="block w-1.5 h-1.5 rounded-full bg-[#C9A961]" />
-                                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase" as const, color: "#1E2260" }}>
+                                    <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
+                                    <span className="text-navy" style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>
                                         For Buyers
                                     </span>
                                 </div>
-                                <span style={{ fontFamily: "var(--font-serif)", fontSize: 13, fontStyle: "italic", color: "#C9A961" }}>
+                                <span className="text-gold" style={{ fontFamily: "var(--font-serif)", fontSize: 13, fontStyle: "italic" }}>
                                     i.
                                 </span>
                             </div>
@@ -84,14 +84,14 @@ export default function TwoPaths() {
                                     01
                                 </div> */}
 
-                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#1E2260" }} className="mb-3">
+                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1 }} className="mb-3 text-navy">
                                     Buying property in Lagos,
                                 </h2>
-                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1, fontStyle: "italic", color: "#C9A961" }} className="mb-10">
+                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1, fontStyle: "italic" }} className="mb-10 text-gold">
                                     at home or abroad?
                                 </h2>
 
-                                <p style={{ fontFamily: "var(--font-sans)", fontSize: 15.5, lineHeight: 1.8, color: "#4A4E5A", fontWeight: 400 }} className="flex-1 mb-12">
+                                <p style={{ fontFamily: "var(--font-sans)", fontSize: 15.5, lineHeight: 1.8, fontWeight: 400 }} className="flex-1 mb-12 text-slate">
                                     Forged documents. The same plot sold to two buyers. Lawyers
                                     who can&apos;t access the registry. We&apos;re building
                                     independent property verification you can trust before you
@@ -101,8 +101,8 @@ export default function TwoPaths() {
                                 {/* CTA button */}
                                 <Link
                                     href="#form-section"
-                                    className="tp-cta-light group self-start flex items-center gap-3 px-6 py-3.5 border border-[#1E2260] rounded-sm transition-all duration-200"
-                                    style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const, color: "#F5F2ED", backgroundColor: "#1E2260" }}
+                                    className="tp-cta-light group self-start flex items-center gap-3 px-6 py-3.5 border border-navy rounded-sm transition-all duration-200 text-cream bg-navy"
+                                    style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const }}
                                 >
                                     Join the buyer waitlist
                                     <span className="tp-arrow transition-transform duration-200">→</span>
@@ -111,30 +111,27 @@ export default function TwoPaths() {
                         </div>
 
                         {/* ── CARD II: DEVELOPERS ── */}
-                        <div className={`relative flex flex-col bg-[#1E2260] border border-[#1E2260] transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-
-                            {/* Subtle radial glow */}
-                            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at 80% 20%, rgba(201,169,97,0.08) 0%, transparent 60%)" }} />
+                        <div className={`relative flex flex-col bg-navy border border-navy transition-all duration-700 delay-200 ${visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
 
                             {/* Inner grid */}
                             <svg aria-hidden="true" className="absolute inset-0 w-full h-full pointer-events-none">
                                 <defs>
                                     <pattern id="dev-grid" x="0" y="0" width="56" height="56" patternUnits="userSpaceOnUse">
-                                        <path d="M 56 0 L 0 0 0 56" fill="none" stroke="rgba(201,169,97,0.06)" strokeWidth="0.7" />
+                                        <path d="M 56 0 L 0 0 0 56" fill="none" stroke="var(--gold)" strokeOpacity={0.06} strokeWidth="0.7" />
                                     </pattern>
                                 </defs>
                                 <rect width="100%" height="100%" fill="url(#dev-grid)" />
                             </svg>
 
                             {/* Top bar with label */}
-                            <div className="relative z-10 flex items-center justify-between px-10 md:px-14 pt-10 md:pt-12 pb-8 border-b border-[#C9A961]/12">
+                            <div className="relative z-10 flex items-center justify-between px-10 md:px-14 pt-10 md:pt-12 pb-8 border-b border-gold/12">
                                 <div className="flex items-center gap-3">
-                                    <span className="block w-1.5 h-1.5 rounded-full bg-[#C9A961]" />
-                                    <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase" as const, color: "#C9A961" }}>
+                                    <span className="block w-1.5 h-1.5 rounded-full bg-gold" />
+                                    <span className="text-gold" style={{ fontFamily: "var(--font-mono)", fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase" as const }}>
                                         For Developers
                                     </span>
                                 </div>
-                                <span style={{ fontFamily: "var(--font-serif)", fontSize: 13, fontStyle: "italic", color: "rgba(201,169,97,0.5)" }}>
+                                <span className="text-gold/50" style={{ fontFamily: "var(--font-serif)", fontSize: 13, fontStyle: "italic" }}>
                                     ii.
                                 </span>
                             </div>
@@ -158,14 +155,14 @@ export default function TwoPaths() {
                                     02
                                 </div> */}
 
-                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1, color: "#F5F2ED" }} className="mb-3">
+                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1 }} className="mb-3 text-cream">
                                     Active portfolio,
                                 </h2>
-                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1, fontStyle: "italic", color: "#C9A961" }} className="mb-10">
+                                <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 44px)", fontWeight: 400, letterSpacing: "-0.02em", lineHeight: 1.1, fontStyle: "italic" }} className="mb-10 text-gold">
                                     buyers who hesitate?
                                 </h2>
 
-                                <p style={{ fontFamily: "var(--font-sans)", fontSize: 15.5, lineHeight: 1.8, color: "rgba(245,242,237,0.72)", fontWeight: 400 }} className="flex-1 mb-12">
+                                <p style={{ fontFamily: "var(--font-sans)", fontSize: 15.5, lineHeight: 1.8, fontWeight: 400 }} className="flex-1 mb-12 text-cream/72">
                                     Our Founding 50 program is admitting Lagos developers now.
                                     Verified portfolio inventory, Founding Partner badge on every
                                     certificate, priority access to the Bank API and Marketplace
@@ -175,8 +172,8 @@ export default function TwoPaths() {
                                 {/* CTA button */}
                                 <Link
                                     href="#form-section"
-                                    className="tp-cta-dark group self-start flex items-center gap-3 px-6 py-3.5 border border-[#C9A961] rounded-sm transition-all duration-200"
-                                    style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const, color: "#1E2260", backgroundColor: "#C9A961" }}
+                                    className="tp-cta-dark group self-start flex items-center gap-3 px-6 py-3.5 border border-gold rounded-sm transition-all duration-200 text-navy bg-gold"
+                                    style={{ fontFamily: "var(--font-mono)", fontSize: 10, letterSpacing: "0.20em", textTransform: "uppercase" as const }}
                                 >
                                     Apply for Founding 50
                                     <span className="tp-arrow transition-transform duration-200">→</span>
@@ -189,8 +186,8 @@ export default function TwoPaths() {
             </section>
 
             <style>{`
-                .tp-cta-light:hover { background-color: #14174A !important; border-color: #14174A !important; }
-                .tp-cta-dark:hover { background-color: #B8963A !important; border-color: #B8963A !important; }
+                .tp-cta-light:hover { background-color: var(--navy-deep) !important; border-color: var(--navy-deep) !important; }
+                .tp-cta-dark:hover { background-color: var(--gold-deep) !important; border-color: var(--gold-deep) !important; }
                 .tp-cta-light:hover .tp-arrow,
                 .tp-cta-dark:hover .tp-arrow { transform: translateX(4px); }
             `}</style>

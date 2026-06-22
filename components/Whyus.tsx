@@ -43,7 +43,7 @@ export default function WhyUs() {
         <section
             ref={ref}
             aria-labelledby="whyus-heading"
-            className="bg-[#F5F2ED]"
+            className="bg-cream"
             id="why-us"
         >
             <div className="mx-auto px-4 sm:px-12 py-24" style={{ maxWidth: 1280 }}>
@@ -60,23 +60,23 @@ export default function WhyUs() {
                     <div className="flex items-center gap-2.5 mb-5">
                         <span
                             aria-hidden="true"
-                            className="block w-5 h-px bg-[#C9A961] flex-shrink-0"
+                            className="block w-5 h-px bg-gold flex-shrink-0"
                         />
-                        <span className="font-sans text-[10px] uppercase tracking-[0.22em] text-[#A88A45]">
+                        <span className="font-sans text-[10px] uppercase tracking-[0.22em] text-gold-deep">
                             Why us, why now
                         </span>
                     </div>
 
                     <h2
                         id="whyus-heading"
-                        className="font-serif font-medium text-[#1E2260] mb-5"
+                        className="font-serif font-medium text-navy mb-5"
                         style={{ fontSize: "clamp(36px, 4vw, 52px)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
                     >
-                        What we <em className="italic text-[#C9A961]">stand for.</em>
+                        What we <em className="italic text-gold">stand for.</em>
                     </h2>
 
                     <p
-                        className="font-sans text-[15px] leading-[1.75] text-[#6B6F77] font-normal max-w-[56ch]"
+                        className="font-sans text-[15px] leading-[1.75] text-slate font-normal max-w-[56ch]"
                     >
                         We stand for a future where every property claim can be verified
                         before money changes hands.
@@ -88,9 +88,8 @@ export default function WhyUs() {
                     {PILLARS.map((p, i) => (
                         <div
                             key={p.num}
-                            className="bg-white px-8 pt-3 pb-6 rounded-md"
+                            className="bg-white px-8 pt-3 pb-6 rounded-md border border-navy/8"
                             style={{
-                                boxShadow: "0 2px 16px -4px rgba(30,34,96,0.08), 0 1px 4px -2px rgba(30,34,96,0.04)",
                                 opacity: visible ? 1 : 0,
                                 transform: visible ? "translateY(0)" : "translateY(14px)",
                                 transition: `opacity 0.6s ease ${100 + i * 100}ms, transform 0.6s ease ${100 + i * 100}ms`,
@@ -98,24 +97,23 @@ export default function WhyUs() {
                         >
                             {/* Large faded number */}
                             <div
-                                className="font-serif italic font-normal leading-none mb-7"
+                                className="font-serif italic font-normal leading-none mb-7 text-navy/10"
                                 style={{
                                     fontSize: "clamp(32px, 6vw, 70px)",
                                     letterSpacing: "-0.03em",
-                                    color: "rgba(30,34,96,0.10)",
                                 }}
                             >
                                 {p.num}
                             </div>
 
                             <h3
-                                className="font-serif font-semibold text-[#1E2260] mb-4"
+                                className="font-serif font-semibold text-navy mb-4"
                                 style={{ fontSize: "clamp(18px, 1.8vw, 24px)", lineHeight: 1.25 }}
                             >
                                 {p.heading}
                             </h3>
 
-                            <p className="font-sans text-[14.5px] leading-[1.85] text-[#4A4E5A] font-normal">
+                            <p className="font-sans text-[14.5px] leading-[1.85] text-slate font-normal">
                                 {p.body}
                             </p>
                         </div>

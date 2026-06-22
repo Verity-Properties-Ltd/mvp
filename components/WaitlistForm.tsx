@@ -80,16 +80,16 @@ const Field = ({
 }) => (
     <div className={full ? "col-span-2" : ""}>
         <div className="flex items-center gap-2 mb-2.5">
-            <span className="font-sans text-[9px] uppercase tracking-[0.22em] text-[#C9A961]">
+            <span className="font-sans text-[9px] uppercase tracking-[0.22em] text-gold">
                 {label}
             </span>
             {required && (
-                <span className="font-sans text-[9px] uppercase tracking-[0.18em] text-[rgba(245,242,237,0.35)]">
+                <span className="font-sans text-[9px] uppercase tracking-[0.18em] text-cream/35">
                     — Required
                 </span>
             )}
             {optional && (
-                <span className="font-sans text-[9px] uppercase tracking-[0.18em] text-[rgba(245,242,237,0.35)]">
+                <span className="font-sans text-[9px] uppercase tracking-[0.18em] text-cream/35">
                     — Optional
                 </span>
             )}
@@ -99,19 +99,20 @@ const Field = ({
 )
 
 const inputClass =
-    "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 rounded-sm placeholder:text-[rgba(245,242,237,0.25)] placeholder:italic focus:outline-none focus:border-[#C9A961] transition-colors duration-150"
+    "w-full bg-navy-deep border border-cream/10 text-cream font-sans text-[15px] px-4 py-3.5 rounded-sm placeholder:text-cream/25 placeholder:italic focus:outline-none focus:border-gold transition-colors duration-150"
 
 const selectClass =
-    "w-full bg-[#171A4A] border border-[rgba(245,242,237,0.10)] text-[#F5F2ED] font-sans text-[15px] px-4 py-3.5 rounded-sm appearance-none focus:outline-none focus:border-[#C9A961] transition-colors duration-150 cursor-pointer"
+    "w-full bg-navy-deep border border-cream/10 text-cream font-sans text-[15px] px-4 py-3.5 rounded-sm appearance-none focus:outline-none focus:border-gold transition-colors duration-150 cursor-pointer"
 
 const Chevron = () => (
     <div className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2">
         <svg width="12" height="7" viewBox="0 0 12 7" fill="none">
-            <path d="M1 1l5 5 5-5" stroke="#C9A961" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M1 1l5 5 5-5" stroke="var(--gold)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     </div>
 )
 
+// verity-allow: off-token-color — light error tone for readability on navy bg; no dark-surface danger token defined yet
 const ErrorNote = ({ message }: { message: string }) => (
     <p className="font-sans text-[13px] leading-[1.6] text-[#E8A5A5]" role="alert">
         — {message}
@@ -151,19 +152,19 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
         >
             <div className="mb-10">
                 <div className="flex items-center gap-3 mb-5">
-                    <span className="block w-8 h-px bg-[#C9A961] flex-shrink-0" />
-                    <span className="font-sans text-[9px] uppercase tracking-[0.26em] text-[#C9A961]">
+                    <span className="block w-8 h-px bg-gold flex-shrink-0" />
+                    <span className="font-sans text-[9px] uppercase tracking-[0.26em] text-gold">
                         Buyer Waitlist
                     </span>
                 </div>
                 <h2
-                    className="font-serif font-normal text-[#F5F2ED] mb-5"
+                    className="font-serif font-normal text-cream mb-5"
                     style={{ fontSize: "clamp(28px, 3.5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
                 >
                     Be first in line when we open <br />verification{" "}
-                    <em className="italic text-[#C9A961]">to the public.</em>
+                    <em className="italic text-gold">to the public.</em>
                 </h2>
-                <p className="font-sans text-[15px] leading-[1.75] text-[rgba(245,242,237,0.65)] font-normal max-w-[52ch]">
+                <p className="font-sans text-[15px] leading-[1.75] text-cream/65 font-normal max-w-[52ch]">
                     We'll email you when the verification platform opens, and we'll
                     prioritise the first cohort of buyers from this waitlist for early
                     access at launch pricing.
@@ -245,14 +246,14 @@ const BuyerForm = ({ visible }: { visible: boolean }) => {
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#C9A961] border-b border-[#C9A961] pb-1 bg-transparent transition-colors duration-150"
+                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-gold border-b border-gold pb-1 bg-transparent transition-colors duration-150"
                         style={{ opacity: isPending ? 0.5 : 1, cursor: isPending ? "not-allowed" : "pointer" }}
                     >
                         {isPending ? "Joining…" : "Join the buyer waitlist"}
                         {!isPending && <span aria-hidden="true" className="wl-arrow">→</span>}
                     </button>
                     {isError && <ErrorNote message={(error as Error)?.message ?? "Something went wrong."} />}
-                    <p className="font-sans italic text-[13px] text-[rgba(245,242,237,0.38)] leading-[1.6]">
+                    <p className="font-sans italic text-[13px] text-cream/38 leading-[1.6]">
                         — We'll email you at launch, nothing else. No marketing, no third-party sharing. Unsubscribe anytime.
                     </p>
                 </div>
@@ -300,19 +301,19 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
         >
             <div className="mb-10">
                 <div className="flex items-center gap-3 mb-5">
-                    <span className="block w-8 h-px bg-[#C9A961] flex-shrink-0" />
-                    <span className="font-sans text-[9px] uppercase tracking-[0.26em] text-[#C9A961]">
+                    <span className="block w-8 h-px bg-gold flex-shrink-0" />
+                    <span className="font-sans text-[9px] uppercase tracking-[0.26em] text-gold">
                         Founding 50
                     </span>
                 </div>
                 <h2
-                    className="font-serif font-normal text-[#F5F2ED] mb-5"
+                    className="font-serif font-normal text-cream mb-5"
                     style={{ fontSize: "clamp(28px, 3.5vw, 48px)", lineHeight: 1.1, letterSpacing: "-0.02em" }}
                 >
                     Apply to be a{" "}
-                    <em className="italic text-[#C9A961]">Founding 50 Partner.</em>
+                    <em className="italic text-gold">Founding 50 Partner.</em>
                 </h2>
-                <p className="font-sans text-[15px] leading-[1.75] text-[rgba(245,242,237,0.65)] font-normal max-w-[52ch]">
+                <p className="font-sans text-[15px] leading-[1.75] text-cream/65 font-normal max-w-[52ch]">
                     Limited to the first 50 admitted developers. Reviewed by the
                     founding team — we read every application and respond within
                     five business days. The CEO does the onboarding call himself.
@@ -430,14 +431,14 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
                     <button
                         type="submit"
                         disabled={isPending}
-                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-[#C9A961] border-b border-[#C9A961] pb-1 bg-transparent transition-colors duration-150"
+                        className="wl-submit-btn self-start flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.22em] text-gold border-b border-gold pb-1 bg-transparent transition-colors duration-150"
                         style={{ opacity: isPending ? 0.5 : 1, cursor: isPending ? "not-allowed" : "pointer" }}
                     >
                         {isPending ? "Submitting…" : "Submit application"}
                         {!isPending && <span aria-hidden="true" className="wl-arrow">→</span>}
                     </button>
                     {isError && <ErrorNote message={(error as Error)?.message ?? "Something went wrong."} />}
-                    <p className="font-sans italic text-[13px] text-[rgba(245,242,237,0.38)] leading-[1.6]">
+                    <p className="font-sans italic text-[13px] text-cream/38 leading-[1.6]">
                         — Reviewed within 5 business days. Successful applicants get a 20-minute onboarding call with the CEO. Limited to first 50.
                     </p>
                 </div>
@@ -448,19 +449,19 @@ const DeveloperForm = ({ visible }: { visible: boolean }) => {
 
 const Confirmation = () => (
     <div className="flex flex-col items-start gap-6 py-8">
-        <div className="w-14 h-14 rounded-full bg-[#C9A961] flex items-center justify-center flex-shrink-0">
+        <div className="w-14 h-14 rounded-full bg-gold flex items-center justify-center flex-shrink-0">
             <svg width="22" height="16" viewBox="0 0 22 16" fill="none">
-                <path d="M1 8l6 6L21 1" stroke="#1E2260" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M1 8l6 6L21 1" stroke="var(--navy)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
         </div>
         <div>
             <h3
-                className="font-serif font-normal text-[#F5F2ED] mb-3"
+                className="font-serif font-normal text-cream mb-3"
                 style={{ fontSize: "clamp(24px, 3vw, 38px)", lineHeight: 1.15, letterSpacing: "-0.015em" }}
             >
                 You're on the list.
             </h3>
-            <p className="font-sans text-[15px] leading-[1.75] text-[rgba(245,242,237,0.6)] max-w-[44ch]">
+            <p className="font-sans text-[15px] leading-[1.75] text-cream/60 max-w-[44ch]">
                 We'll be in touch. Check your email for a confirmation in the next few minutes.
             </p>
         </div>
@@ -479,7 +480,7 @@ export default function WaitlistForm() {
                 id="waitlist-form"
                 ref={ref}
                 aria-labelledby="waitlist-heading"
-                className="bg-[#1E2260]"
+                className="bg-navy"
             >
                 <div
                     className="mx-auto px-4 sm:px-12 pt-20 pb-28"
@@ -493,16 +494,15 @@ export default function WaitlistForm() {
                             transition: "opacity 0.5s ease, transform 0.5s ease",
                         }}
                     >
-                        <span className="block w-8 h-px bg-[#C9A961] flex-shrink-0" />
-                        <span className="font-sans text-[9px] uppercase tracking-[0.26em] text-[rgba(245,242,237,0.5)]">
+                        <span className="block w-8 h-px bg-gold flex-shrink-0" />
+                        <span className="font-sans text-[9px] uppercase tracking-[0.26em] text-cream/50">
                             A small step · Two minutes
                         </span>
                     </div>
 
                     <div
-                        className="grid grid-cols-2 mb-16"
+                        className="grid grid-cols-2 mb-16 border-b border-cream/10"
                         style={{
-                            borderBottom: "1px solid rgba(245,242,237,0.10)",
                             opacity: visible ? 1 : 0,
                             transition: "opacity 0.5s ease 0.1s",
                         }}
@@ -516,12 +516,9 @@ export default function WaitlistForm() {
                                 aria-selected={activeTab === tab}
                                 aria-controls={`panel-${tab}`}
                                 onClick={() => setActiveTab(tab)}
-                                className="font-mono text-[11px] uppercase tracking-[0.26em] py-5 text-center transition-colors duration-150 cursor-pointer bg-transparent border-none"
-                                style={{
-                                    color: activeTab === tab ? "#C9A961" : "rgba(245,242,237,0.35)",
-                                    borderBottom: activeTab === tab ? "1px solid #C9A961" : "1px solid transparent",
-                                    marginBottom: -1,
-                                }}
+                                className={`font-mono text-[11px] uppercase tracking-[0.26em] py-5 text-center transition-colors duration-150 cursor-pointer bg-transparent border-none border-b ${activeTab === tab ? "text-gold border-gold" : "text-cream/35 border-transparent"
+                                    }`}
+                                style={{ marginBottom: -1 }}
                             >
                                 {tab === "buyer" ? "I'm a buyer" : "I'm a developer"}
                             </button>
@@ -550,12 +547,12 @@ export default function WaitlistForm() {
             </section>
 
             <style>{`
-                .wl-submit-btn:hover { color: rgba(245,242,237,0.85) !important; border-color: rgba(245,242,237,0.85) !important; }
+                .wl-submit-btn:hover { color: color-mix(in srgb, var(--cream) 85%, transparent) !important; border-color: color-mix(in srgb, var(--cream) 85%, transparent) !important; }
                 @media (prefers-reduced-motion: no-preference) {
                     .wl-arrow { display: inline-block; transition: transform 0.18s ease; }
                     .wl-submit-btn:hover .wl-arrow { transform: translateX(4px); }
                 }
-                select option { background-color: #171A4A; color: #F5F2ED; }
+                select option { background-color: var(--navy-deep); color: var(--cream); }
             `}</style>
         </>
     )
