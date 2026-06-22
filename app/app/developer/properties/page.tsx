@@ -157,7 +157,7 @@ export default function PropertiesPage() {
                     {filtered.length} propert{filtered.length === 1 ? 'y' : 'ies'} found
                 </p>
                 <button
-                    onClick={() => router.push('/dashboard/upload')}
+                    onClick={() => router.push('/app/developer/upload')}
                     className="flex cursor-pointer items-center gap-2 bg-[#C9A84C] hover:bg-[#B8962E] text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-sm"
                 >
                     <Upload className="w-4 h-4" />
