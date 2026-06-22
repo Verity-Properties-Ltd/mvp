@@ -180,7 +180,7 @@ const SinglePropertyForm = ({ isEdit }: { isEdit: boolean }) => {
 
     const handleSubmit = () => {
         console.log('Submit:', form);
-        router.push('/dashboard/properties');
+        router.push('/app/developer/properties');
     };
 
     // ── Step 1 ──
@@ -848,7 +848,7 @@ const BulkCsvUpload = () => {
                     className="px-5 py-2.5 rounded-xl border border-[#E5E7EB] text-sm font-semibold text-[#374151] hover:bg-[#F9FAFB] transition-colors">
                     Upload another batch
                 </button>
-                <button onClick={() => router.push('/dashboard/properties')}
+                <button onClick={() => router.push('/app/developer/properties')}
                     className="px-5 py-2.5 rounded-xl bg-[#0D7A5F] hover:bg-[#0A6450] text-white text-sm font-semibold transition-colors">
                     View properties →
                 </button>

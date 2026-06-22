@@ -45,9 +45,8 @@ export default function ForDevelopers() {
             <section
                 id="for-developers"
                 aria-label="For Developers"
-                className="w-full relative overflow-hidden"
+                className="w-full relative overflow-hidden bg-navy"
                 style={{
-                    background: "#0F2340",
                     scrollMarginTop: "80px",
                     paddingTop: "80px",
                     paddingBottom: "80px",
@@ -67,10 +66,7 @@ export default function ForDevelopers() {
 
                         {/* Left — text */}
                         <div>
-                            <span
-                                className="text-[11px] font-semibold tracking-[0.15em] uppercase"
-                                style={{ color: "#C9A84C" }}
-                            >
+                            <span className="text-[11px] font-semibold tracking-[0.15em] uppercase text-gold">
                                 For Developers
                             </span>
                             <h2
@@ -79,27 +75,21 @@ export default function ForDevelopers() {
                             >
                                 One dashboard for your entire property portfolio.
                             </h2>
-                            <p
-                                className="text-base mb-10 leading-relaxed"
-                                style={{ color: "rgba(255,255,255,0.7)" }}
-                            >
+                            <p className="text-base mb-10 leading-relaxed text-white/70">
                                 Upload title documents, track verification status in real time, and generate bank-ready certificates for every plot you own.
                             </p>
 
                             <div className="flex flex-col gap-5 mb-10">
                                 {valueProps.map((vp) => (
                                     <div key={vp.label} className="flex items-start gap-3">
-                                        <div
-                                            className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                                            style={{ background: "#0D7A5F" }}
-                                        >
+                                        <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 bg-teal">
                                             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                                                 <path d="M20 6L9 17L4 12" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                                             </svg>
                                         </div>
                                         <div>
                                             <span className="font-semibold text-white">{vp.label}</span>
-                                            <span style={{ color: "rgba(255,255,255,0.6)" }}> — {vp.desc}</span>
+                                            <span className="text-white/60"> — {vp.desc}</span>
                                         </div>
                                     </div>
                                 ))}
@@ -109,15 +99,11 @@ export default function ForDevelopers() {
                                 <button
                                     type="button"
                                     onClick={() => setModalOpen(true)}
-                                    className="px-8 py-3.5 rounded-xl font-semibold text-base transition-all duration-150 hover:shadow-lg active:scale-[0.98]"
-                                    style={{ background: "#C9A84C", color: "#1F2937" }}
+                                    className="px-8 py-3.5 rounded-xl font-semibold text-base transition-all duration-150 active:scale-[0.98] bg-gold text-navy"
                                 >
                                     Request a Developer Dashboard Demo
                                 </button>
-                                <p
-                                    className="mt-3 text-xs italic"
-                                    style={{ color: "rgba(255,255,255,0.5)" }}
-                                >
+                                <p className="mt-3 text-xs italic text-white/50">
                                     Free first 5 verifications for new developer accounts — limited time offer.
                                 </p>
                             </div>
@@ -125,26 +111,13 @@ export default function ForDevelopers() {
 
                         {/* Right — visual mockup */}
                         <div className="hidden lg:flex items-center justify-center">
-                            <div
-                                className="w-full max-w-[500px] rounded-2xl overflow-hidden"
-                                style={{
-                                    background: "rgba(255,255,255,0.05)",
-                                    border: "1px solid rgba(255,255,255,0.1)",
-                                    boxShadow: "0 25px 60px rgba(0,0,0,0.4)",
-                                }}
-                            >
+                            <div className="w-full max-w-[500px] rounded-2xl overflow-hidden bg-white/5 border border-white/10">
                                 {/* Browser chrome */}
-                                <div
-                                    className="flex items-center gap-2 px-4 py-3"
-                                    style={{ background: "rgba(255,255,255,0.07)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}
-                                >
+                                <div className="flex items-center gap-2 px-4 py-3 bg-white/7 border-b border-white/8">
                                     <span className="w-3 h-3 rounded-full bg-red-500 opacity-70" />
                                     <span className="w-3 h-3 rounded-full bg-yellow-500 opacity-70" />
                                     <span className="w-3 h-3 rounded-full bg-green-500 opacity-70" />
-                                    <span
-                                        className="ml-3 flex-1 text-xs text-center px-3 py-1 rounded"
-                                        style={{ background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.3)" }}
-                                    >
+                                    <span className="ml-3 flex-1 text-xs text-center px-3 py-1 rounded bg-white/6 text-white/30">
                                         dashboard.verity.properties
                                     </span>
                                 </div>
@@ -160,13 +133,12 @@ export default function ForDevelopers() {
                                         ].map((s) => (
                                             <div
                                                 key={s.label}
-                                                className="rounded-lg p-3 text-center"
-                                                style={{ background: "rgba(255,255,255,0.06)" }}
+                                                className="rounded-lg p-3 text-center bg-white/6"
                                             >
                                                 <div className="font-bold font-serif text-lg text-white">
                                                     {s.val}
                                                 </div>
-                                                <div className="text-[10px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+                                                <div className="text-[10px] text-white/40">
                                                     {s.label}
                                                 </div>
                                             </div>
@@ -174,25 +146,24 @@ export default function ForDevelopers() {
                                     </div>
 
                                     {/* Property rows */}
-                                    <div className="rounded-lg overflow-hidden" style={{ border: "1px solid rgba(255,255,255,0.06)" }}>
+                                    <div className="rounded-lg overflow-hidden border border-white/6">
                                         {[
-                                            { addr: "15 Bourdillon Rd, Ikoyi", status: "Verified", statusColor: "#15803D", statusBg: "#DCFCE7" },
-                                            { addr: "24 Admiralty Way, Lekki", status: "Verified", statusColor: "#15803D", statusBg: "#DCFCE7" },
-                                            { addr: "8 Close B, Victoria Island", status: "Pending", statusColor: "#D97706", statusBg: "#FEF3C7" },
-                                            { addr: "Plot 5 Banana Island", status: "Verified", statusColor: "#15803D", statusBg: "#DCFCE7" },
+                                            { addr: "15 Bourdillon Rd, Ikoyi", status: "Verified", tone: "success" as const },
+                                            { addr: "24 Admiralty Way, Lekki", status: "Verified", tone: "success" as const },
+                                            { addr: "8 Close B, Victoria Island", status: "Pending", tone: "warning" as const },
+                                            { addr: "Plot 5 Banana Island", status: "Verified", tone: "success" as const },
                                         ].map((row, i) => (
                                             <div
                                                 key={i}
-                                                className="flex items-center justify-between px-3 py-2.5"
-                                                style={{
-                                                    borderBottom: i < 3 ? "1px solid rgba(255,255,255,0.05)" : undefined,
-                                                    background: i % 2 === 0 ? "rgba(255,255,255,0.02)" : "transparent",
-                                                }}
+                                                className={`flex items-center justify-between px-3 py-2.5 ${i < 3 ? "border-b border-white/5" : ""} ${i % 2 === 0 ? "bg-white/2" : "bg-transparent"
+                                                    }`}
                                             >
                                                 <span className="text-[11px] text-white/60 truncate max-w-[180px]">{row.addr}</span>
                                                 <span
-                                                    className="text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0"
-                                                    style={{ background: row.statusBg, color: row.statusColor }}
+                                                    className={`text-[10px] font-semibold px-2 py-0.5 rounded-full flex-shrink-0 ${row.tone === "success"
+                                                            ? "bg-success/15 text-success"
+                                                            : "bg-warning/15 text-warning"
+                                                        }`}
                                                 >
                                                     {row.status}
                                                 </span>
@@ -203,8 +174,7 @@ export default function ForDevelopers() {
                                     {/* Bottom CTA */}
                                     <button
                                         type="button"
-                                        className="w-full mt-4 py-2.5 rounded-lg text-xs font-semibold text-white transition-opacity hover:opacity-90"
-                                        style={{ background: "#0D7A5F" }}
+                                        className="w-full mt-4 py-2.5 rounded-lg text-xs font-semibold text-white transition-opacity hover:opacity-90 bg-teal"
                                     >
                                         + Upload New Property
                                     </button>
@@ -219,48 +189,38 @@ export default function ForDevelopers() {
             {/* Demo Request Modal */}
             {modalOpen && (
                 <div
-                    className="fixed inset-0 z-[200] flex items-center justify-center p-4"
-                    style={{ background: "rgba(0,0,0,0.5)" }}
+                    className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/50"
                     onClick={(e) => { if (e.target === e.currentTarget) setModalOpen(false); }}
                 >
                     <div className="bg-white rounded-2xl shadow-2xl w-full max-w-[480px] p-8 relative">
                         <button
                             type="button"
                             onClick={() => setModalOpen(false)}
-                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-xl font-light"
+                            className="absolute top-4 right-4 text-slate-soft hover:text-navy text-xl font-light"
                         >
                             ×
                         </button>
 
                         {status === "success" ? (
                             <div className="text-center py-8">
-                                <div
-                                    className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
-                                    style={{ background: "#DCFCE7" }}
-                                >
+                                <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 bg-success/15">
                                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                                        <path d="M20 6L9 17L4 12" stroke="#15803D" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M20 6L9 17L4 12" stroke="var(--success)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </div>
-                                <h3
-                                    className="font-bold font-serif text-xl mb-2"
-                                    style={{ color: "#1B3F6B" }}
-                                >
+                                <h3 className="font-bold font-serif text-xl mb-2 text-navy">
                                     Request Received!
                                 </h3>
-                                <p className="text-sm" style={{ color: "#374151" }}>
+                                <p className="text-sm text-slate">
                                     Thanks — Sheun will be in touch within 24 hours.
                                 </p>
                             </div>
                         ) : (
                             <>
-                                <h3
-                                    className="font-bold font-serif text-xl mb-1"
-                                    style={{ color: "#1B3F6B" }}
-                                >
+                                <h3 className="font-bold font-serif text-xl mb-1 text-navy">
                                     Request a Developer Demo
                                 </h3>
-                                <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
+                                <p className="text-sm mb-6 text-slate">
                                     Tell us about your portfolio and we&apos;ll get in touch within 24 hours.
                                 </p>
 
@@ -272,10 +232,7 @@ export default function ForDevelopers() {
                                         { label: "Phone Number", key: "phone", type: "tel", placeholder: "+234 800 000 0000" },
                                     ].map((field) => (
                                         <div key={field.key}>
-                                            <label
-                                                className="block text-xs font-semibold uppercase tracking-wider mb-1.5"
-                                                style={{ color: "#6B7280" }}
-                                            >
+                                            <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5 text-slate">
                                                 {field.label}
                                             </label>
                                             <input
@@ -283,14 +240,13 @@ export default function ForDevelopers() {
                                                 placeholder={field.placeholder}
                                                 value={form[field.key as keyof typeof form]}
                                                 onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                                                className="w-full px-4 py-2.5 rounded-lg border text-sm outline-none transition-all duration-150 focus:border-[#1B3F6B] focus:shadow-[0_0_0_3px_rgba(27,63,107,0.1)]"
-                                                style={{ borderColor: "#D1D5DB", color: "#111827" }}
+                                                className="w-full px-4 py-2.5 rounded-lg border text-sm outline-none transition-all duration-150 border-line text-navy focus:border-navy focus:shadow-[0_0_0_3px_var(--line-strong)]"
                                             />
                                         </div>
                                     ))}
 
                                     {status === "error" && (
-                                        <p className="text-sm text-red-600">
+                                        <p className="text-sm text-danger">
                                             Something went wrong.{" "}
                                             <a href="mailto:hello@verity.properties" className="underline">
                                                 Email us instead
@@ -302,8 +258,7 @@ export default function ForDevelopers() {
                                         type="button"
                                         onClick={handleSubmit}
                                         disabled={status === "loading"}
-                                        className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98] disabled:opacity-60 hover:opacity-90"
-                                        style={{ background: "#0D7A5F" }}
+                                        className="w-full py-3 rounded-xl font-semibold text-white transition-all duration-150 active:scale-[0.98] disabled:opacity-60 hover:opacity-90 bg-teal"
                                     >
                                         {status === "loading" ? "Submitting..." : "Submit Request"}
                                     </button>

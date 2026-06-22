@@ -4,23 +4,15 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, AlertCircle } from 'lucide-react';
+import { VerityMark } from '@/components/brand';
+import { authService, EmailExistsError } from '@/lib/services/auth/authService';
+import { setSession } from '@/lib/services/auth/session';
 
 const VerityLogo = () => (
     <div className="flex items-center gap-2">
-        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-            <path d="M16 2L4 7V16C4 22.627 9.373 28 16 30C22.627 28 28 22.627 28 16V7L16 2Z"
-                fill="url(#signin-shield)" />
-            <path d="M11 16L14.5 19.5L21 13" stroke="white" strokeWidth="2.2"
-                strokeLinecap="round" strokeLinejoin="round" />
-            <defs>
-                <linearGradient id="signin-shield" x1="16" y1="2" x2="16" y2="30" gradientUnits="userSpaceOnUse">
-                    <stop stopColor="#F0D080" />
-                    <stop offset="1" stopColor="#C9A84C" />
-                </linearGradient>
-            </defs>
-        </svg>
+        <VerityMark size={28} />
         <span className="text-white font-bold tracking-[0.15em] text-[15px] uppercase">
-            VERI<span className="text-[#C9A84C]">TY</span>
+            VERI<span className="text-gold">TY</span>
         </span>
     </div>
 );
@@ -29,9 +21,9 @@ const VerityLogo = () => (
 const inputClass = `
     w-full h-12 px-4 bg-white/10 text-white placeholder:text-white/30
     rounded-2xl text-sm border border-white/10 outline-none transition-all
-    focus:bg-white/15 focus:border-[#C9A84C]/60
-    [&:-webkit-autofill]:!bg-[#1a2e45]
-    [&:-webkit-autofill]:[box-shadow:0_0_0px_1000px_#1a2e45_inset]
+    focus:bg-white/15 focus:border-gold/60
+    [&:-webkit-autofill]:!bg-navy-deep
+    [&:-webkit-autofill]:[box-shadow:0_0_0px_1000px_var(--navy-deep)_inset]
     [&:-webkit-autofill]:![-webkit-text-fill-color:white]
 `;
 
@@ -54,18 +46,24 @@ export default function SignInPage() {
             return;
         }
         setLoading(true);
-        await new Promise((r) => setTimeout(r, 1000));
-        setLoading(false);
-        router.push('/dashboard');
+        try {
+            const session = await authService.signIn(email.trim(), password);
+            setSession(session);
+            router.push(session.role === 'developer' ? '/app/developer' : '/app/buyer');
+        } catch (err) {
+            setError(err instanceof EmailExistsError ? err.message : 'Invalid email or password.');
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="min-h-screen bg-[#062642] flex flex-col">
+        <div className="min-h-screen bg-navy flex flex-col">
             {/* Nav */}
             <nav className="flex items-center justify-between px-8 py-5">
                 <VerityLogo />
                 <Link href="/sign-up"
-                    className="text-sm text-[#C9A84C] underline underline-offset-4 hover:text-[#F0D080] transition-colors">
+                    className="text-sm text-gold underline underline-offset-4 hover:text-gold-soft transition-colors">
                     Create account
                 </Link>
             </nav>
@@ -98,7 +96,7 @@ export default function SignInPage() {
                                 onChange={(e) => { setEmail(e.target.value); setError(''); }}
                                 onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
                                 className={inputClass}
-                                style={{ WebkitBoxShadow: '0 0 0px 1000px #1a2e45 inset', WebkitTextFillColor: email ? 'white' : undefined }}
+                                style={{ WebkitBoxShadow: '0 0 0px 1000px var(--navy-deep) inset', WebkitTextFillColor: email ? 'white' : undefined }}
                             />
                         </div>
 
@@ -107,7 +105,7 @@ export default function SignInPage() {
                             <div className="flex items-center justify-between">
                                 <label className="block text-[13px] font-medium text-white/70">Password</label>
                                 <Link href="/forgot-password"
-                                    className="text-[12px] text-[#C9A84C] hover:text-[#F0D080] transition-colors">
+                                    className="text-[12px] text-gold hover:text-gold-soft transition-colors">
                                     Forgot password?
                                 </Link>
                             </div>
@@ -119,7 +117,7 @@ export default function SignInPage() {
                                     onChange={(e) => { setPassword(e.target.value); setError(''); }}
                                     onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
                                     className={`${inputClass} pr-12`}
-                                    style={{ WebkitBoxShadow: '0 0 0px 1000px #1a2e45 inset', WebkitTextFillColor: 'white' }}
+                                    style={{ WebkitBoxShadow: '0 0 0px 1000px var(--navy-deep) inset', WebkitTextFillColor: 'white' }}
                                 />
                                 <button type="button"
                                     onClick={() => setShowPassword((s) => !s)}
@@ -133,7 +131,7 @@ export default function SignInPage() {
                         <button
                             onClick={handleSubmit}
                             disabled={loading}
-                            className="w-full h-12 bg-[#C9A84C] hover:bg-[#B8962E] disabled:opacity-60
+                            className="w-full h-12 bg-gold hover:bg-gold-deep disabled:opacity-60
                                 disabled:cursor-not-allowed text-white font-semibold text-sm
                                 rounded-2xl transition-colors flex items-center justify-center gap-2"
                         >
@@ -151,7 +149,7 @@ export default function SignInPage() {
 
                     <p className="text-center text-sm text-white/30 mt-5">
                         Don't have an account?{' '}
-                        <Link href="/sign-up" className="text-[#C9A84C] hover:text-[#F0D080] transition-colors">
+                        <Link href="/sign-up" className="text-gold hover:text-gold-soft transition-colors">
                             Create one
                         </Link>
                     </p>
@@ -167,7 +165,7 @@ export default function SignInPage() {
                 input:-webkit-autofill,
                 input:-webkit-autofill:hover,
                 input:-webkit-autofill:focus {
-                    -webkit-box-shadow: 0 0 0px 1000px #1a2e45 inset !important;
+                    -webkit-box-shadow: 0 0 0px 1000px var(--navy-deep) inset !important;
                     -webkit-text-fill-color: white !important;
                     caret-color: white;
                     transition: background-color 5000s ease-in-out 0s;

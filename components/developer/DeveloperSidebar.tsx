@@ -17,15 +17,15 @@ import { usePathname } from 'next/navigation';
 
 // ─── Nav structure matching the design ───────────────────────────────────────
 const mainMenu = [
-    { name: 'Dashboard', icon: LayoutDashboard, path: '/dashboard', disabled: false },
-    { name: 'Properties', icon: Building2, path: '/dashboard/properties', disabled: false },
-    { name: 'reports', icon: FileBarChart2, path: '/dashboard/reports', disabled: true },
+    { name: 'Dashboard', icon: LayoutDashboard, path: '/app/developer', disabled: false },
+    { name: 'Properties', icon: Building2, path: '/app/developer/properties', disabled: false },
+    { name: 'reports', icon: FileBarChart2, path: '/app/developer/reports', disabled: true },
 ];
 
 const accountMenu = [
-    { name: 'Team', icon: Users, path: '/developer/team', disabled: true },
-    { name: 'Billing', icon: CreditCard, path: '/developer/billing', disabled: true },
-    { name: 'Settings', icon: Settings, path: '/developer/settings', disabled: true },
+    { name: 'Team', icon: Users, path: '/app/developer/team', disabled: true },
+    { name: 'Billing', icon: CreditCard, path: '/app/developer/billing', disabled: true },
+    { name: 'Settings', icon: Settings, path: '/app/developer/settings', disabled: true },
 ];
 
 // ─── Verity Shield Logo SVG ───────────────────────────────────────────────────

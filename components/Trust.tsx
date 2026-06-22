@@ -6,8 +6,7 @@ export default function Trust() {
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                 </svg>
             ),
-            iconBg: "rgba(13,122,95,0.15)",
-            iconColor: "#0D7A5F",
+            tone: "teal" as const,
             title: "AI-Powered Verification",
             body: "Advanced machine learning cross-references multiple government databases to detect inconsistencies and potential fraud.",
         },
@@ -20,8 +19,7 @@ export default function Trust() {
                     <path d="M16 3.13a4 4 0 010 7.75" />
                 </svg>
             ),
-            iconBg: "rgba(13,122,95,0.15)",
-            iconColor: "#0D7A5F",
+            tone: "teal" as const,
             title: "Analyst-Reviewed Reports",
             body: "Every report is reviewed by certified legal analysts with expertise in Nigerian property law and land documentation.",
         },
@@ -32,8 +30,7 @@ export default function Trust() {
                     <path d="M7 11V7a5 5 0 0110 0v4" />
                 </svg>
             ),
-            iconBg: "rgba(201,168,76,0.12)",
-            iconColor: "#C9A84C",
+            tone: "gold" as const,
             title: "Secure & Compliant",
             body: "Bank-level encryption, Paystack payment security, and full NDPR compliance ensure your data is always protected.",
         },
@@ -48,9 +45,8 @@ export default function Trust() {
     return (
         <section
             aria-label="Why trust Verity"
-            className="w-full relative overflow-hidden"
+            className="w-full relative overflow-hidden bg-navy"
             style={{
-                background: "#062642",
                 paddingTop: "96px",
                 paddingBottom: "96px",
             }}
@@ -73,14 +69,7 @@ export default function Trust() {
 
                 {/* Header — left aligned like reference */}
                 <div className="mb-14">
-                    <p
-                        className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full"
-                        style={{
-                            background: "rgba(201,168,76,0.12)",
-                            color: "#C9A84C",
-                            border: "1px solid rgba(201,168,76,0.3)",
-                        }}
-                    >
+                    <p className="text-xs font-semibold uppercase w-max mb-6 tracking-[0.15em] px-4 py-1.5 rounded-full text-gold bg-gold/12 border border-gold/30">
                         Why trust Verity
                     </p>
                     <h2
@@ -100,20 +89,14 @@ export default function Trust() {
                     {pillars.map((pillar) => (
                         <div
                             key={pillar.title}
-                            className="rounded-2xl p-8 flex flex-col gap-8 transition-all duration-200 hover:border-white/20"
-                            style={{
-                                background: "rgba(255,255,255,0.04)",
-                                border: "1px solid rgba(255,255,255,0.09)",
-                            }}
+                            className="rounded-2xl p-8 flex flex-col gap-8 transition-all duration-200 bg-white/4 border border-white/9 hover:border-white/20"
                         >
                             {/* Icon */}
                             <div
-                                className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
-                                style={{
-                                    background: pillar.iconBg,
-                                    color: pillar.iconColor,
-                                    border: `1px solid ${pillar.iconColor}30`,
-                                }}
+                                className={`w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0 border ${pillar.tone === "teal"
+                                        ? "bg-teal/15 text-teal border-teal/30"
+                                        : "bg-gold/12 text-gold border-gold/30"
+                                    }`}
                             >
                                 {pillar.icon}
                             </div>
@@ -125,10 +108,7 @@ export default function Trust() {
                                 >
                                     {pillar.title}
                                 </h3>
-                                <p
-                                    className="text-sm leading-relaxed"
-                                    style={{ color: "rgba(255,255,255,0.5)" }}
-                                >
+                                <p className="text-sm leading-relaxed text-white/50">
                                     {pillar.body}
                                 </p>
                             </div>

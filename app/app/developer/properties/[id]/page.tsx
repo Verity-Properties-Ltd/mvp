@@ -310,7 +310,7 @@ export default function PropertyDetailPage() {
                 <div className="bg-white border border-[#F3F4F6] rounded-2xl p-6">
                     <h3 className="text-sm font-bold text-[#111827] mb-3">Actions</h3>
                     <div className="space-y-2">
-                        <button onClick={() => router.push(`/developer/upload?edit=${property.id}`)}
+                        <button onClick={() => router.push(`/app/developer/upload?edit=${property.id}`)}
                             className="w-full flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[#E5E7EB] text-sm font-semibold text-[#374151] hover:bg-[#F9FAFB] transition-colors">
                             <Pencil className="w-4 h-4 text-[#6B7280]" /> Edit Property
                         </button>
@@ -494,9 +494,9 @@ export default function PropertyDetailPage() {
         <div className="min-h-screen bg-[#F9FAFB] p-6 md:p-8">
             {/* ── Breadcrumb ── */}
             <div className="flex items-center gap-1.5 text-xs text-[#9CA3AF] mb-4">
-                <Link href="/dashboard" className="hover:text-[#374151] transition-colors">Dashboard</Link>
+                <Link href="/app/developer" className="hover:text-[#374151] transition-colors">Dashboard</Link>
                 <ChevronRight className="w-3 h-3" />
-                <Link href="/developer/properties" className="hover:text-[#374151] transition-colors">Properties</Link>
+                <Link href="/app/developer/properties" className="hover:text-[#374151] transition-colors">Properties</Link>
                 <ChevronRight className="w-3 h-3" />
                 <span className="text-[#374151] font-medium truncate max-w-[240px]">{property.address}</span>
             </div>

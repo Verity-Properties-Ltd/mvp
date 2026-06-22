@@ -42,7 +42,7 @@ const RecentProperties = () => {
                     <p className="text-xs text-[#9CA3AF] mt-0.5">Last 10 uploaded properties</p>
                 </div>
                 <Link
-                    href="/dashboard/properties"
+                    href="/app/developer/properties"
                     className="flex items-center gap-1 text-sm font-semibold text-[#0D7A5F] hover:text-[#0A6450] transition-colors"
                 >
                     View all

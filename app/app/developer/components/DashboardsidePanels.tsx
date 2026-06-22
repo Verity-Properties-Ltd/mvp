@@ -87,9 +87,9 @@ interface QuickAction {
 }
 
 const quickActions: QuickAction[] = [
-    { label: 'Upload New Property', href: '/developer/upload' },
-    { label: 'View Flagged Properties', href: '/developer/properties?status=flagged', danger: true },
-    { label: 'Invite Team Member', href: '/developer/team' },
+    { label: 'Upload New Property', href: '/app/developer/upload' },
+    { label: 'View Flagged Properties', href: '/app/developer/properties?status=flagged', danger: true },
+    { label: 'Invite Team Member', href: '/app/developer/team' },
 ];
 
 // ─── Main component ───────────────────────────────────────────────────────────
