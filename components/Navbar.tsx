@@ -77,7 +77,7 @@ export default function Navbar() {
                                 hidden sm:inline-flex items-center gap-2
                                 font-mono text-[10px] tracking-[0.18em] uppercase
                                 text-[#F5F2ED] bg-[#1E2260] border border-[#1E2260]
-                                px-5 py-2.5
+                                px-5 py-2.5 rounded-sm
                                 transition-all duration-200
                                 hover:bg-[#14174A] hover:border-[#14174A]
                                 group
@@ -144,7 +144,7 @@ export default function Navbar() {
                                 className="
                                     font-mono text-[11px] tracking-[0.18em] uppercase
                                     text-[#F5F2ED] bg-[#1E2260] border border-[#1E2260]
-                                    py-3.5 px-5 w-full text-center block
+                                    py-3.5 px-5 w-full text-center block rounded-sm
                                     hover:bg-[#14174A]
                                 "
                             >
